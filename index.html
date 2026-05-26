@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -1336,12 +1336,9 @@ body.light-theme .theme-toggle {
       <button class="tab-btn active" id="tabDashboard" onclick="Dashboard.mudarAba('dashboard')">
         <span class="tab-icon">&#128202;</span>Dashboard
       </button>
-      <button class="tab-btn" id="tabMercado" onclick="Dashboard.mudarAba('mercado')">
-        <span class="tab-icon">&#128197;</span>Calendário Econômico
-      </button>
     </div>
     <div class="topbar-right">
-      <a href="portal/login.html" class="portal-btn">&#127891; <span>Portal do Aluno</span></a>
+      <a href="portal/login.html" class="portal-btn">&#127891; <span>Portal Admin</span></a>
       <button class="topbar-btn" id="pdfReportBtn" onclick="Dashboard.gerarRelatorioPDF()" style="visibility:hidden;">&#128248; <span>Exportar</span></button>
       <button class="theme-toggle" onclick="Dashboard.toggleTema()"><span id="themeIcon">&#127769;</span></button>
     </div>
@@ -1350,7 +1347,6 @@ body.light-theme .theme-toggle {
   <!-- Mobile tabs -->
   <div class="mobile-tabs">
     <button class="tab-btn active" onclick="Dashboard.mudarAba('dashboard')">&#128202; Dashboard</button>
-    <button class="tab-btn" onclick="Dashboard.mudarAba('mercado')">&#128197; Calendário Econômico</button>
   </div>
  
   <!-- FILTROS -->
@@ -1555,20 +1551,6 @@ body.light-theme .theme-toggle {
       </div>
     </div><!-- /contentDashboard -->
  
-    <!-- �"?�"? ABA CALENDÁRIO ECON�"MICO �"?�"? -->
-    <div id="contentMercado" class="tab-content">
-      <div class="glass-card market-card">
-        <div class="market-header">
-          <h3>&#128197; Calendário Econômico</h3>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <button class="calendar-refresh-btn" onclick="Dashboard.atualizarCalendario()">&#128260; Atualizar</button>
-            <a href="https://br.investing.com/economic-calendar/" target="_blank" class="market-link">Ver Completo &rarr;</a>
-          </div>
-        </div>
-        <div id="tvCalendarContainer" style="min-height:700px;"></div>
-      </div>
-    </div>
- 
   </main><!-- /main-content -->
  
   <!-- FOOTER -->
@@ -1711,16 +1693,7 @@ const Dashboard = {
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     const content = document.getElementById('content' + aba.charAt(0).toUpperCase() + aba.slice(1));
     if (content) content.classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      if (btn.textContent.toLowerCase().includes(aba === 'dashboard' ? 'dashboard' : 'calendário') ||
-          btn.textContent.toLowerCase().includes(aba === 'mercado' ? 'calendário' : '')) {
-        if ((aba === 'dashboard' && btn.textContent.includes('Dashboard')) ||
-            (aba === 'mercado' && btn.textContent.includes('Calendário')))
-          btn.classList.add('active');
-      }
-    });
     document.getElementById('tab' + aba.charAt(0).toUpperCase() + aba.slice(1))?.classList.add('active');
-    if (aba === 'mercado') setTimeout(() => this.atualizarCalendario(), 150);
   },
  
   inicializarGestosMobile() {
@@ -1730,11 +1703,6 @@ const Dashboard = {
     container.addEventListener('touchend',(e)=>{
       const endX=e.changedTouches[0].clientX, endY=e.changedTouches[0].clientY;
       const diffX=startX-endX, diffY=startY-endY;
-      if(Math.abs(diffX)>Math.abs(diffY)&&Math.abs(diffX)>50){
-        const dashActive=document.getElementById('contentDashboard').classList.contains('active');
-        if(diffX>0&&dashActive) this.mudarAba('mercado');
-        else if(diffX<0&&!dashActive) this.mudarAba('dashboard');
-      }
     },{passive:true});
   },
  
@@ -1743,7 +1711,7 @@ const Dashboard = {
     if (!btn) return;
     const textoOriginal = btn.innerHTML;
     btn.classList.add('loading');
-    btn.innerHTML = '? Gerando...';
+    btn.innerHTML = '&#128248; Gerando...';
 
     try {
       if (!window.html2canvas) {
@@ -2439,11 +2407,6 @@ obterDadosFiltrados(){
     if(brlN)brlN.textContent=(usdN*taxa).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     if(brlD)brlD.textContent=(usdD*taxa).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     if(brlS)brlS.textContent=(usdS*taxa).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-  },
- 
-  atualizarCalendario(){
-    const container=document.getElementById('tvCalendarContainer'); if(!container)return;
-    container.innerHTML=`<iframe src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&importance=1,2,3&features=datepicker,timezone,timeselector,filters&countries=5,25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4&calType=day&timeZone=12&lang=12" frameborder="0" scrolling="yes" allowtransparency="true" style="width:100%;height:720px;border:none;background:transparent;"></iframe>`;
   },
  
   inicializarZoomFoto(container,img){

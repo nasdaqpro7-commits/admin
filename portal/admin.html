@@ -1,0 +1,2196 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Admin | Dashboard NASDAQ PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* .. TEMA COMPARTILHADO NasdaqPro .. */
+:root {
+  --bg: #050711;
+  --card: #0f1420;
+  --card-hover: #161b2e;
+  --border: rgba(99,102,241,0.15);
+  --border-bright: rgba(99,102,241,0.4);
+  --text: #f8fafc;
+  --text-dim: #cbd5e1;
+  --text-muted: #64748b;
+  --accent: #10b981;
+  --blue: #6366f1;
+  --blue-bright: #818cf8;
+  --red: #ef4444;
+  --orange: #f97316;
+  --sidebar-bg: #0a0d1a;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+body.light-theme {
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --card-hover: #f8fafc;
+  --border: rgba(99,102,241,0.18);
+  --border-bright: rgba(99,102,241,0.45);
+  --text: #0f172a;
+  --text-dim: #334155;
+  --text-muted: #64748b;
+  --sidebar-bg: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+}
+body { background: var(--bg); color: var(--text); }
+body.light-theme { background: var(--bg); color: var(--text); }
+.theme-toggle-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover { border-color: var(--blue-bright); background: var(--card-hover); transform: scale(1.08); }
+#themeIcon { display: inline-block; }
+body.light-theme input,
+body.light-theme textarea,
+body.light-theme select { background: #f8fafc; border-color: rgba(99,102,241,0.2); color: #0f172a; }
+body.light-theme input:focus,
+body.light-theme textarea:focus,
+body.light-theme select:focus { background: #fff; border-color: #6366f1; }
+body.light-theme header { background: #ffffff !important; border-color: rgba(99,102,241,0.15) !important; }
+body.light-theme .card { background: #ffffff; border-color: rgba(99,102,241,0.15); }
+body.light-theme .post-card { background: #ffffff; border-color: rgba(99,102,241,0.12); }
+body.light-theme .quick-card { background: #ffffff; border-color: rgba(99,102,241,0.15); }
+body.light-theme .comentario-item { background: #f8fafc; border-color: rgba(99,102,241,0.1); }
+body.light-theme .resposta-item { background: #f1f5f9; }
+body.light-theme .filter-btn { background: #f1f5f9; border-color: rgba(99,102,241,0.15); color: #334155; }
+body.light-theme .filter-btn.active { background: #6366f1; color: #fff; }
+body.light-theme .tab { color: #64748b; }
+body.light-theme .tab.active { color: #6366f1; border-bottom-color: #6366f1; }
+body.light-theme .btn-logout { background: #f1f5f9; color: #0f172a; border: 1px solid rgba(99,102,241,0.2); }
+body.light-theme .post-text { color: #475569; }
+body.light-theme .welcome-banner { background: linear-gradient(135deg,rgba(99,102,241,0.07),rgba(16,185,129,0.07)); }
+body.light-theme .upload-area { background: #f8fafc; border-color: rgba(99,102,241,0.2); }
+body.light-theme .upload-area:hover { background: rgba(99,102,241,0.05); border-color: #6366f1; }
+body.light-theme .tabs { border-color: rgba(99,102,241,0.15); }
+body.light-theme table th { background: #f1f5f9; color: #64748b; }
+body.light-theme table td { border-color: rgba(99,102,241,0.1); color: #0f172a; }
+body.light-theme .post-item { background: #f8fafc; border-color: rgba(99,102,241,0.12); }
+body.light-theme .section-header h2 { color: #0f172a; }
+body.light-theme .btn-secondary { background: #f1f5f9; color: #0f172a; border-color: rgba(99,102,241,0.2); }
+body.light-theme .btn-secondary:hover { background: #e2e8f0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); transition: background-color 0.3s, color 0.3s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
+header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; position: sticky; top: 0; z-index: 100; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo { font-size: 24px; }
+h1 { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.btn-logout { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-logout:hover { opacity: 0.8; }
+.container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border); overflow-x: auto; visibility: visible !important; opacity: 1 !important; }
+.tab { padding: 12px 20px; border: none; background: none; color: var(--text-muted); font-size: 14px; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; white-space: nowrap; }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--text); }
+.section { display: none; }
+.section.active { display: block; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.card h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.form-group { margin-bottom: 16px; }
+label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+input, textarea, select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; color: var(--text); font-family: inherit; transition: all .2s; } select option { background: #1e293b; color: #e5e7eb; }
+textarea { resize: vertical; min-height: 100px; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.btn { background: var(--accent); color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn:hover { background: #16a34a; transform: scale(1.02); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-secondary { background: var(--blue); color: #fff; }
+.btn-secondary:hover { background: #2563eb; }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover { background: #dc2626; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 12px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); font-weight: 600; font-size: 12px; text-transform: uppercase; color: var(--text-muted); }
+td { padding: 12px; border-bottom: 1px solid var(--border); }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge.pending { background: rgba(251,191,36,0.1); color: #fbbf24; }
+.badge.approved { background: rgba(34,197,94,0.1); color: var(--accent); }
+.posts-list { display: grid; gap: 16px; }
+.post-item { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; gap: 16px; }
+.post-image { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.post-content { flex: 1; }
+.post-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.post-text { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
+.post-meta { font-size: 12px; color: var(--text-muted); }
+.post-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.upload-area { border: 2px dashed var(--border); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all .3s ease; background: rgba(255,255,255,0.02); }
+.upload-area:hover { border-color: var(--accent); background: rgba(34,197,94,0.05); }
+.upload-area.dragover { border-color: var(--accent); background: rgba(34,197,94,0.1); transform: scale(1.02); }
+.btn-remove-image { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-remove-image:hover { opacity: 0.8; }
+.alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; display: none; }
+.alert.success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--accent); }
+.alert.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
+.loading { text-align: center; padding: 40px; color: var(--text-muted); }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-remove { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-remove:hover { background: #dc2626; }
+.yt-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.3); color: #ff4444; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+@keyframes fadeNewComent { from{opacity:0;transform:translateY(-10px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+@media (max-width: 768px) {
+  .container { padding: 16px; }
+  .post-item { flex-direction: column; }
+  .post-image { width: 100%; height: 160px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px; }
+}
+
+@keyframes slideInComment {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideInPost {
+  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.post-item--novo {
+  border-color: rgba(16,185,129,0.4) !important;
+  box-shadow: 0 0 0 1px rgba(16,185,129,0.2), 0 4px 16px rgba(16,185,129,0.1);
+}
+
+
+.tab-superadmin { border: 1px solid rgba(251,191,36,0.4) !important; color: #fbbf24 !important; }
+.tab-superadmin.active { background: linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05)) !important; border-color: #fbbf24 !important; }
+.perm-tag { display:inline-flex;align-items:center;gap:4px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:var(--blue);border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;white-space:nowrap; }
+.perm-tag.perm-off { background:rgba(100,116,139,0.08);border-color:rgba(100,116,139,0.15);color:var(--text-muted); }
+.admin-card { display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(251,191,36,0.03);border:1px solid rgba(251,191,36,0.15);border-radius:12px;transition:all .2s;margin-bottom:10px; }
+.admin-card:hover { border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.06); }
+.admin-card:last-child { margin-bottom:0; }
+.superadmin-badge { background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;border-radius:20px;padding:2px 10px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <span class="logo">PA</span>
+    <h1>Painel Admin</h1>
+  </div>
+  <div class="user-info">
+    <a href="../" style="display:inline-block;background:rgba(255,255,255,0.1);color:var(--text);border:1px solid var(--border);padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;margin-right:12px;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Dashboard</a>
+    <button id="btnConectarYT" onclick="autenticarYouTube()" style="display:none;background:#ff0000;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;">Conectar YouTube</button>
+    <button id="btnVisualizacao" onclick="alternarVisualizacao()" title="Alternar visualizacao" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;" onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.12)'">Ver como Aluno</button>
+    <button class="theme-toggle-btn" onclick="NasTheme.toggle()" title="Alternar tema"><span id="themeIcon">Tema</span></button>
+    <div id="adminAvatarHeader" onclick="abrirPerfilAdmin()" title="Editar perfil" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;cursor:pointer;overflow:hidden;border:2px solid transparent;transition:all .2s;flex-shrink:0;">
+      <span id="adminAvatarLetra">A</span>
+    </div>
+    <span id="adminName" onclick="abrirPerfilAdmin()" style="cursor:pointer;font-weight:600;">Admin</span>
+    <button class="btn-logout" onclick="logout()">Sair</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="tabs" id="tabsBar">
+    <button class="tab active" id="tabPosts" onclick="switchTab('posts')">Posts</button>
+    <button class="tab" id="tabAprovacoes" onclick="switchTab('aprovacoes')">Aprovar Alunos</button>
+    <button class="tab" id="tabPlanilha" onclick="switchTab('planilha')">Planilha & Fotos</button>
+    <button class="tab tab-superadmin" id="tabAdmins" onclick="switchTab('admins')" style="display:none;">Administradores</button>
+  </div>
+
+  <!-- POSTS -->
+  <div id="posts-section" class="section active">
+    <div class="card">
+      <h2>Criar Novo Post</h2>
+      <div id="alert-post" class="alert"></div>
+      <form id="formPost">
+        <div class="form-group">
+          <label>Titulo</label>
+          <input type="text" id="postTitulo" placeholder="Ex: Analise semanal do NASDAQ" required>
+        </div>
+        <div class="form-group">
+          <label>Descricao (opcional)</label>
+          <textarea id="postTexto" placeholder="Escreva uma descricao para o post..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Categoria</label>
+          <select id="postCategoria">
+            <option value="sala-ao-vivo">Sala ao Vivo</option>
+            <option value="materiais">Materiais</option>
+            <option value="analise">Analise</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="noticia">Noticia</option>
+            <option value="link">Link Util</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Link (opcional)</label>
+          <input type="url" id="postLink" placeholder="https://exemplo.com">
+        </div>
+        <div class="form-group">
+          <label>Arquivo/Midia (opcional)</label>
+          <div class="upload-area" id="uploadAreaUniversal">
+            <input type="file" id="postArquivo" accept="*" style="display:none">
+            <div id="uploadPlaceholderUniversal">
+              <span style="font-size:64px">+</span>
+              <p><strong>Arraste arquivos aqui</strong> (multiplos permitidos)<br>ou clique para selecionar</p>
+            </div>
+            <div id="uploadPreviewUniversal" style="display:none;">
+              <div id="previewContent"></div>
+              <button type="button" class="btn-remove-image" onclick="removerArquivoUniversal()">Remover</button>
+            </div>
+            <div id="uploadProgressUniversal" style="display:none;">
+              <div class="spinner"></div>
+              <p id="uploadProgressTextUniversal" style="margin:16px 0 12px;color:var(--text);font-weight:600;">Enviando...</p>
+              <div style="width:100%;max-width:400px;margin:0 auto;background:rgba(255,255,255,0.1);height:8px;border-radius:10px;overflow:hidden;">
+                <div id="uploadProgressBar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--accent),#16a34a);transition:width 0.3s ease;"></div>
+              </div>
+              <p id="uploadProgressPercent" style="margin-top:8px;font-size:13px;color:var(--text-muted);font-weight:600;">0%</p>
+            </div>
+          </div>
+          <input type="hidden" id="postMidiaURL">
+          <input type="hidden" id="postMidiaTipo">
+          <input type="hidden" id="postYoutubeEmbedURL">
+        </div>
+        <button type="submit" class="btn" id="btnPost">Publicar Post</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Posts Publicados</h2>
+      <div id="posts-list" class="posts-list">
+        <div class="loading"><div class="spinner"></div><p>Carregando posts...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aprovacoes -->
+  <div id="aprovacoes-section" class="section">
+
+    <!-- Stats bar -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:var(--blue);" id="stat-total">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Total de Alunos</div>
+      </div>
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:var(--green);" id="stat-aprovados">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Aprovados</div>
+      </div>
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:#f97316;" id="stat-pendentes">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Pendentes</div>
+      </div>
+    </div>
+
+    <!-- Cards lado a lado -->
+    <div style="display:grid;grid-template-columns:minmax(260px,38%) 1fr;gap:16px;align-items:start;">
+
+      <!--Pendentes (coluna esquerda) -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+          <h2 style="margin:0;">Pendentes</h2>
+          <span id="badge-pendentes" style="background:rgba(249,115,22,0.15);color:#f97316;border:1px solid rgba(249,115,22,0.3);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;">0 aguardando</span>
+        </div>
+        <div id="alert-aprovacao" class="alert"></div>
+        <div id="usuarios-pendentes"><div class="loading"><div class="spinner"></div><p>Carregando...</p></div></div>
+      </div>
+
+      <!--Aprovados com busca (coluna direita) -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <h2 style="margin:0;">Aprovados</h2>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <span id="badge-aprovados" style="background:rgba(16,185,129,0.12);color:#10b981;border:1px solid rgba(16,185,129,0.2);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;">0 alunos</span>
+            <button onclick="exportarAlunos()" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.2);color:var(--blue);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.12)'"> CSV</button>
+          </div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <input type="text" id="buscaAlunos" placeholder="Buscar por nome ou e-mail..." oninput="filtrarAlunos(this.value)"
+            style="width:100%;padding:10px 16px;background:rgba(99,102,241,0.06);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:14px;transition:all .2s;outline:none;"
+            onfocus="this.style.borderColor='var(--blue)';this.style.background='rgba(99,102,241,0.1)'"
+            onblur="this.style.borderColor='var(--border)';this.style.background='rgba(99,102,241,0.06)'">
+        </div>
+        <div id="usuarios-aprovados"><div class="loading"><div class="spinner"></div><p>Carregando...</p></div></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PLANILHA & FOTOS -->
+  <div id="planilha-section" class="section">
+    <div class="card">
+      <h2>Registrar Trade do Dia</h2>
+      <p style="color:var(--text-muted);margin-bottom:16px;">Preencha os dados e a planilha sera atualizada automaticamente.</p>
+      <div id="alert-trade-data" class="alert"></div>
+      <form id="formTradeData">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div class="form-group"><label>Dia</label><input type="number" id="diaData" min="1" max="31" required placeholder="12"></div>
+          <div class="form-group">
+            <label>Mes</label>
+            <select id="mesData" required>
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Marco</option>
+              <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
+              <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
+              <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Ano</label><input type="number" id="anoData" min="2020" max="2030" required placeholder="2026"></div>
+          <div class="form-group"><label>Semana (auto)</label><input type="text" id="semana" readonly style="cursor:not-allowed;opacity:0.6;"></div>
+        </div>
+        <div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.25);border-radius:10px;padding:16px;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="font-size:18px;"></span>
+            <strong style="font-size:15px;color:#60a5fa;">NASDAQ</strong>
+            <label style="display:flex;align-items:center;gap:6px;margin-left:auto;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="nasOp" checked onchange="toggleAtivo('nas')"> Operado hoje
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px;" id="nasFields">
+            <div class="form-group"><label>Pontos</label><input type="number" id="nasPontos" placeholder="Ex: 35"></div>
+            <div class="form-group"><label>Trades</label><input type="number" id="nasTrades" min="0" placeholder="Ex: 3"></div>
+            <div class="form-group"><label>Gains</label><input type="number" id="nasGains" min="0" placeholder="Ex: 2"></div>
+            <div class="form-group"><label>Stops</label><input type="number" id="nasStops" min="0" placeholder="Ex: 1"></div>
+            <div class="form-group"><label>0x0</label><input type="number" id="nasBreak" min="0" placeholder="Ex: 0"></div>
+          </div>
+        </div>
+        <div style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.25);border-radius:10px;padding:16px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="font-size:18px;"></span>
+            <strong style="font-size:15px;color:#38bdf8;">S&amp;P 500</strong>
+            <label style="display:flex;align-items:center;gap:6px;margin-left:auto;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="spOp" onchange="toggleAtivo('sp')"> Operado hoje
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px;opacity:0.4;pointer-events:none;" id="spFields">
+            <div class="form-group"><label>Pontos</label><input type="number" id="spPontos" placeholder="Ex: 25"></div>
+            <div class="form-group"><label>Trades</label><input type="number" id="spTrades" min="0" placeholder="Ex: 2"></div>
+            <div class="form-group"><label>Gains</label><input type="number" id="spGains" min="0" placeholder="Ex: 1"></div>
+            <div class="form-group"><label>Stops</label><input type="number" id="spStops" min="0" placeholder="Ex: 1"></div>
+            <div class="form-group"><label>0x0</label><input type="number" id="spBreak" min="0" placeholder="Ex: 0"></div>
+          </div>
+        </div>
+        <div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.25);border-radius:10px;padding:16px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="font-size:18px;"></span>
+            <strong style="font-size:15px;color:#fb923c;">DOW JONES</strong>
+            <label style="display:flex;align-items:center;gap:6px;margin-left:auto;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="dowOp" onchange="toggleAtivo('dow')"> Operado hoje
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px;opacity:0.4;pointer-events:none;" id="dowFields">
+            <div class="form-group"><label>Pontos</label><input type="number" id="dowPontos" placeholder="Ex: 120"></div>
+            <div class="form-group"><label>Trades</label><input type="number" id="dowTrades" min="0" placeholder="Ex: 2"></div>
+            <div class="form-group"><label>Gains</label><input type="number" id="dowGains" min="0" placeholder="Ex: 1"></div>
+            <div class="form-group"><label>Stops</label><input type="number" id="dowStops" min="0" placeholder="Ex: 1"></div>
+            <div class="form-group"><label>0x0</label><input type="number" id="dowBreak" min="0" placeholder="Ex: 0"></div>
+          </div>
+        </div>
+        <button type="submit" class="btn" id="btnTradeData" style="margin-top:4px;width:100%;padding:14px;font-size:15px;">Salvar na Planilha</button>
+      </form>
+      <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Ver/editar a planilha completa:</p>
+        <a href="#" id="btnAbrirPlanilha" onclick="abrirPlanilhaDinamica(event)" target="_blank" class="btn btn-secondary" style="display:inline-block;padding:8px 16px;text-decoration:none;font-size:13px;">Abrir no Google Sheets</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Fotos dos Trades</h2>
+      <div id="alert-foto-trade" class="alert"></div>
+      <form id="formFotoTrade">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div class="form-group"><label>Dia</label><input type="number" id="diaDoTrade" min="1" max="31" required placeholder="12"></div>
+          <div class="form-group">
+            <label>Mes</label>
+            <select id="mesDoTrade" required>
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Marco</option>
+              <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
+              <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
+              <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Ano</label><input type="number" id="anoDoTrade" min="2020" max="2030" required placeholder="2026"></div>
+        </div>
+        <div class="form-group">
+          <label>Foto do Trade</label>
+          <div class="upload-area" id="uploadAreaTrade" style="cursor:pointer;">
+            <input type="file" id="fileInputTrade" accept="image/*" style="display:none">
+            <div id="uploadPlaceholderTrade">
+              <span style="font-size:48px"></span>
+              <p><strong>Arraste a foto do trade aqui</strong><br>ou clique para selecionar</p>
+              <small style="color:var(--text-muted)">JPG, PNG ate 10MB</small>
+            </div>
+            <div id="uploadPreviewTrade" style="display:none">
+              <img id="previewImgTrade" src="" alt="Preview" style="max-width:100%;max-height:300px;border-radius:8px;margin-bottom:12px;">
+              <button type="button" class="btn-remove" onclick="event.stopPropagation();removerImagemTrade()">Remover</button>
+            </div>
+            <div id="uploadProgressTrade" style="display:none;text-align:center;padding:40px;">
+              <div class="spinner"></div>
+              <p style="color:var(--text-muted);">Fazendo upload...</p>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn" id="btnFotoTrade">Salvar Foto do Trade</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- ADMINISTRADORES (s superadmin v) -->
+  <div id="admins-section" class="section">
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:var(--blue);" id="stat-total-admins">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Total de Admins</div>
+      </div>
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:var(--green);" id="stat-admins-ativos">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Ativos</div>
+      </div>
+      <div class="card" style="padding:16px 20px;text-align:center;">
+        <div style="font-size:28px;font-weight:900;color:#f97316;" id="stat-admins-pendentes">-</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Alunos aprovados (elegiveis)</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(300px,42%) 1fr;gap:16px;align-items:start;">
+
+      <!-- Col esquerda: Promover aluno a admin -->
+      <div class="card">
+        <h2 style="margin-bottom:4px;">Promover Aluno a Admin</h2>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Selecione um aluno aprovado e defina suas permissoes.</p>
+        <div id="alert-admins" class="alert"></div>
+
+        <div class="form-group">
+          <label>Selecionar Aluno</label>
+          <select id="selectAlunoAdmin" style="width:100%;padding:10px 12px;background:rgba(99,102,241,0.06);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:14px;">
+            <option value="">- Escolha um aluno aprovado -</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:10px;">Permissoes</label>
+          <div style="display:flex;flex-direction:column;gap:8px;" id="permissaoesCheckboxes">
+
+            <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+              <input type="checkbox" id="perm_posts" value="posts" style="width:16px;height:16px;accent-color:var(--blue);">
+              <div>
+                <div style="font-size:13px;font-weight:700;"> Publicacoes</div>
+                <div style="font-size:11px;color:var(--text-muted);">Criar e excluir posts</div>
+              </div>
+            </label>
+
+            <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+              <input type="checkbox" id="perm_comentarios" value="comentarios" style="width:16px;height:16px;accent-color:var(--blue);">
+              <div>
+                <div style="font-size:13px;font-weight:700;"> Comentarios</div>
+                <div style="font-size:11px;color:var(--text-muted);">Ver, responder e excluir Comentarios</div>
+              </div>
+            </label>
+
+            <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+              <input type="checkbox" id="perm_alunos" value="alunos" style="width:16px;height:16px;accent-color:var(--blue);">
+              <div>
+                <div style="font-size:13px;font-weight:700;"> Aprovar Alunos</div>
+                <div style="font-size:11px;color:var(--text-muted);">Aprovar, rejeitar e revogar alunos</div>
+              </div>
+            </label>
+
+            <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+              <input type="checkbox" id="perm_planilha" value="planilha" style="width:16px;height:16px;accent-color:var(--blue);">
+              <div>
+                <div style="font-size:13px;font-weight:700;"> Planilha & Fotos</div>
+                <div style="font-size:11px;color:var(--text-muted);">Registrar trades e enviar fotos</div>
+              </div>
+            </label>
+
+            <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+              <input type="checkbox" id="perm_youtube" value="youtube" style="width:16px;height:16px;accent-color:var(--blue);">
+              <div>
+                <div style="font-size:13px;font-weight:700;">YouTube</div>
+                <div style="font-size:11px;color:var(--text-muted);">Fazer upload de Videos diretamente no YouTube (OAuth). Sem isso, ainda pode postar links de Videos externos.</div>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+        <button onclick="promoverAdmin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">
+           Promover a Administrador
+        </button>
+      </div>
+
+      <!-- Col direita: Lista de admins -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <h2 style="margin:0;"> Administradores Ativos</h2>
+          <span id="badge-admins" style="background:rgba(99,102,241,0.12);color:var(--blue);border:1px solid rgba(99,102,241,0.2);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;">0 admins</span>
+        </div>
+        <div id="lista-admins"><div class="loading"><div class="spinner"></div><p>Carregando...</p></div></div>
+      </div>
+
+    </div>
+
+    <!-- Modal editar permissaoes -->
+    <div id="modalEditarpermissaoes" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;align-items:center;justify-content:center;">
+      <div style="background:var(--card-bg,#0f172a);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:440px;position:relative;margin:16px;">
+        <button onclick="fecharModalpermissaoes()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-muted);font-size:22px;cursor:pointer;"></button>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:6px;">Editar permissoes</h3>
+        <p id="editPermNome" style="font-size:13px;color:var(--text-muted);margin-bottom:18px;"></p>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="editPermCheckboxes"></div>
+        <div style="display:flex;gap:10px;margin-top:20px;">
+          <button onclick="salvarpermissaoes()" style="flex:1;padding:11px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;"> Salvar</button>
+          <button onclick="rebaixarAdmin()" style="padding:11px 16px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'">Remover Admin</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL EDITAR POST -->
+  <div id="modalEditarPost" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1500;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:var(--card-bg,#0f172a);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative;">
+      <button onclick="fecharEditarPost()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-muted);font-size:24px;cursor:pointer;line-height:1;"></button>
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:20px;"> Editar Publicao</h3>
+      <div id="alert-edit-post" class="alert"></div>
+      <input type="hidden" id="editPostId">
+      <div class="form-group">
+        <label>Titulo</label>
+        <input type="text" id="editPostTitulo" placeholder="Titulo do post" required style="width:100%;">
+      </div>
+      <div class="form-group">
+        <label>Descricao (opcional)</label>
+        <textarea id="editPostTexto" placeholder="Descricao do post..." style="width:100%;min-height:80px;"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label>Categoria</label>
+          <select id="editPostCategoria" style="width:100%;">
+            <option value="sala-ao-vivo"> Sala ao Vivo</option>
+            <option value="materiais"> Materiais</option>
+            <option value="analise"> Analise</option>
+            <option value="tutorial"> Tutorial</option>
+            <option value="noticia"> Noticia</option>
+            <option value="link"> Link til</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Link (opcional)</label>
+          <input type="url" id="editPostLink" placeholder="https://exemplo.com" style="width:100%;">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button onclick="salvarEdicaoPost()" style="flex:1;padding:12px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'"> Salvar Alteraes</button>
+        <button onclick="fecharEditarPost()" style="padding:12px 20px;background:rgba(100,116,139,0.12);color:var(--text-muted);border:1px solid var(--border);border-radius:10px;font-size:14px;cursor:pointer;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+<!-- MODAL PERFIL ADMIN -->
+<div id="modalPerfilAdmin" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#0f172a;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px;width:100%;max-width:420px;position:relative;">
+    <button onclick="fecharPerfilAdmin()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;"></button>
+    <h3 style="font-size:18px;font-weight:800;margin-bottom:24px;"> Meu Perfil</h3>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:24px;">
+      <div id="adminAvatarBig" onclick="document.getElementById('inputFotoAdmin').click()" title="Clique para trocar foto" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;overflow:hidden;cursor:pointer;border:3px solid rgba(255,255,255,.1);transition:all .2s;">
+        <span id="adminAvatarBigLetra">A</span>
+      </div>
+      <input type="file" id="inputFotoAdmin" accept="image/*" style="display:none" onchange="previsualizarFotoAdmin(this)">
+      <span style="font-size:12px;color:#94a3b8;">Clique no avatar para trocar foto</span>
+    </div>
+    <div style="margin-bottom:16px;"><label style="display:block;font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;">Nome</label>
+      <input type="text" id="inputNomeAdmin" style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;color:#e5e7eb;font-size:14px;font-family:inherit;">
+    </div>
+    <div style="margin-bottom:16px;"><label style="display:block;font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;">E-mail</label>
+      <input type="text" id="inputEmailAdmin" disabled style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;color:#64748b;font-size:14px;font-family:inherit;cursor:not-allowed;">
+    </div>
+    <button onclick="salvarPerfilAdmin()" style="width:100%;background:#6366f1;color:#fff;border:none;padding:12px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;"> Salvar</button>
+    <p id="msgPerfilAdmin" style="text-align:center;margin-top:12px;font-size:13px;color:#22c55e;display:none;"></p>
+  </div>
+</div>
+
+<!-- MODAL INFO Usuario -->
+<div id="modalInfoUser" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#0f172a;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px;width:100%;max-width:380px;position:relative;text-align:center;">
+    <button onclick="document.getElementById('modalInfoUser').style.display='none';" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;"></button>
+    <div id="infoUserAvatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;margin:0 auto 16px;overflow:hidden;"></div>
+    <h3 id="infoUserNome" style="font-size:20px;font-weight:800;margin-bottom:6px;"></h3>
+    <p id="infoUserEmail" style="font-size:14px;color:#94a3b8;margin-bottom:16px;"></p>
+    <p id="infoUserCadastro" style="font-size:13px;color:#64748b;"></p>
+  </div>
+</div>
+
+<script>
+/* NasTheme inline */
+(function(){
+  var KEY='dashboard-tema';
+  function aplicar(t){
+    if(t==='light'){document.documentElement.classList.add('light-theme');if(document.body)document.body.classList.add('light-theme');}
+    else{document.documentElement.classList.remove('light-theme');if(document.body)document.body.classList.remove('light-theme');}
+    var ic=document.getElementById('themeIcon');if(ic)ic.textContent=t==='dark'?'':'';
+  }
+  function get(){return localStorage.getItem(KEY)||'dark';}
+  aplicar(get());
+  window.NasTheme={
+    toggle:function(){
+      var n=get()==='dark'?'light':'dark';
+      localStorage.setItem(KEY,n);aplicar(n);
+      var ic=document.getElementById('themeIcon');
+      if(ic){ic.style.transform='rotate(360deg) scale(0)';setTimeout(function(){ic.textContent=n==='dark'?'':'';ic.style.transform='none';},150);}
+    },
+    getTema:get
+  };
+  document.addEventListener('DOMContentLoaded',function(){aplicar(get());});
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+// Alias Supabase -> sb (usado em todo o script)
+function getSB() { return window._supabase; }
+
+// ..............................................
+// PERFIL ADMIN ?" definidas PRIMEIRO para hoisting seguro
+// ..............................................
+function atualizarAvatarAdmin() {
+  const letra = (window._adminNome||'A').charAt(0).toUpperCase();
+  ['adminAvatarLetra','adminAvatarBigLetra'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.textContent = letra;
+  });
+  if (window._adminFotoUrl) {
+    ['adminAvatarHeader','adminAvatarBig'].forEach(function(id) {
+      var el = document.getElementById(id); if (!el) return;
+      el.innerHTML = '<img src="' + window._adminFotoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    });
+  }
+}
+
+function abrirPerfilAdmin() {
+  document.getElementById('inputNomeAdmin').value = window._adminNome || '';
+  document.getElementById('inputEmailAdmin').value = window._adminEmail || '';
+  var bigEl = document.getElementById('adminAvatarBig');
+  if (window._adminFotoUrl) bigEl.innerHTML = '<img src="' + window._adminFotoUrl + '" style="width:100%;height:100%;object-fit:cover;">';
+  else bigEl.innerHTML = '<span id="adminAvatarBigLetra">' + (window._adminNome||'A').charAt(0).toUpperCase() + '</span>';
+  document.getElementById('msgPerfilAdmin').style.display = 'none';
+  document.getElementById('modalPerfilAdmin').style.display = 'flex';
+}
+
+function fecharPerfilAdmin() { document.getElementById('modalPerfilAdmin').style.display = 'none'; }
+
+function previsualizarFotoAdmin(input) {
+  var file = input.files[0]; if (!file) return;
+  if (file.size > 500*1024) { alert('Foto muito grande. Use at 500KB.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    window._adminFotoTemp = e.target.result;
+    document.getElementById('adminAvatarBig').innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover;">';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function salvarPerfilAdmin() {
+  var nome = document.getElementById('inputNomeAdmin').value.trim();
+  if (!nome) { alert('Preencha o nome'); return; }
+  var msgEl = document.getElementById('msgPerfilAdmin');
+  try {
+    var update = { nome: nome };
+    if (window._adminFotoTemp) update.fotoUrl = window._adminFotoTemp;
+    const _updateData = { nome };
+    if (window._adminFotoTemp) _updateData.foto_url = window._adminFotoTemp;
+    const { error: _upErr } = await getSB().from('users').update(_updateData).eq('id', window._adminUid);
+    if (_upErr) throw _upErr;
+    window._adminNome = nome;
+    if (window._adminFotoTemp) { window._adminFotoUrl = window._adminFotoTemp; delete window._adminFotoTemp; }
+    document.getElementById('adminName').textContent = nome;
+    atualizarAvatarAdmin();
+    msgEl.textContent = 'Perfil salvo!'; msgEl.style.display = 'block';
+    setTimeout(function() { fecharPerfilAdmin(); }, 1200);
+  } catch(e) { msgEl.textContent = 'Erro ao salvar'; msgEl.style.color = '#ef4444'; msgEl.style.display = 'block'; }
+}
+
+async function verInfoUsuario(autorId, nomeExibido) {
+  if (!autorId) { alert('ID do Usuario no disponvel.'); return; }
+  try {
+    const { data: _res2 } = await getSB().from('users').select('nome,email,created_at,foto_url').eq('id', autorId).single();
+    var data = _res2 || {};
+    var nome = data.nome || nomeExibido || 'Desconhecido';
+    var email = data.email || autorId;
+    var criado = data.created_at ? new Date(data.created_at).toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}) : '-';
+    document.getElementById('infoUserNome').textContent = nome;
+    document.getElementById('infoUserEmail').textContent = ' ' + email;
+    document.getElementById('infoUserCadastro').textContent = 'Cadastrado em: ' + criado;
+    var avatarEl = document.getElementById('infoUserAvatar');
+    if (data.foto_url) avatarEl.innerHTML = '<img src="' + data.foto_url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    else avatarEl.textContent = nome.charAt(0).toUpperCase();
+    document.getElementById('modalInfoUser').style.display = 'flex';
+  } catch(e) { alert('Erro ao buscar dados do Usuario.'); }
+}
+
+// ..............................................
+// CONFIGURAO carregada do Supabase
+// ..............................................
+let APPS_SCRIPT_URL  = null;
+let YT_CLIENT_ID     = null;
+let YT_CLIENT_SECRET = null;
+const YT_SCOPE    = 'https://www.googleapis.com/auth/youtube.force-ssl';
+const YT_REDIRECT = 'https://jhocosta33-afk.github.io/dashboard-nasdaq-pro/portal/admin.html';
+let SHEETS_SPREADSHEET_ID = null;
+const YT_WORKER   = 'https://youtube-upload-proxy.nasdaqpro7.workers.dev';
+let   ytAccessToken = null;
+
+async function carregarConfiguracoes() {
+  try {
+    const [docOauth, docPublic] = await Promise.all([
+      getSB().from('config').select('data').eq('id','oauth').single(),
+      getSB().from('config').select('data').eq('id','public').single()
+    ]);
+    if (docOauth.error || !docOauth.data) throw new Error('Documento config/oauth no encontrado');
+    const data = docOauth.data.data;
+    APPS_SCRIPT_URL  = data.apps_script_url;
+    YT_CLIENT_ID     = data.client_id;
+    YT_CLIENT_SECRET = data.client_secret;
+    // config/public - spreadsheet ID para o boto abrir planilha
+    if (!docPublic.error && docPublic.data) {
+      const pub = docPublic.data.data;
+      SHEETS_SPREADSHEET_ID = pub.sheets_spreadsheet_id || null;
+    }
+  } catch (err) {
+    console.error('Erro ao carregar configuraes:', err);
+    alert('Erro ao carregar configuraes do sistema.');
+  }
+}
+
+function abrirPlanilhaDinamica(e) {
+  e.preventDefault();
+  // ID correto da planilha NasdaqPro (hardcoded como fonte de verdade)
+  const id = '1iawimQW3a9bWC4-pTJxvnu3ED62AcN-TjthXwpaIQ10';
+  const url = 'https://docs.google.com/spreadsheets/d/' + id + '/edit';
+  window.open(url, '_blank');
+}
+
+async function inicializarYouTubeAuth() {
+  if (!YT_CLIENT_ID || !YT_CLIENT_SECRET) await carregarConfiguracoes();
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  if (code) {
+    window.history.replaceState({}, '', window.location.pathname);
+    await trocarCodePorToken(code);
+    atualizarBotaoYouTube();
+    return;
+  }
+  try {
+    const { data: _ytCfg } = await getSB().from('config').select('data').eq('id','youtube').single();
+    if (_ytCfg?.data?.refresh_token) await renovarAccessToken(_ytCfg.data.refresh_token);
+  } catch (err) { console.log('Token YouTube no configurado ainda.'); }
+  atualizarBotaoYouTube();
+}
+
+async function renovarAccessToken(refreshToken) {
+  try {
+    const resp = await fetch(`${YT_WORKER}/refresh-token`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: YT_CLIENT_ID, client_secret: YT_CLIENT_SECRET, refresh_token: refreshToken })
+    });
+    const data = await resp.json();
+    if (data.success && data.access_token) { ytAccessToken = data.access_token; return true; }
+  } catch (err) { console.error('Erro ao renovar token:', err); }
+  return false;
+}
+
+async function autenticarYouTube() {
+  if (!YT_CLIENT_ID) await carregarConfiguracoes();
+  if (!YT_CLIENT_ID) { alert('Erro ao carregar configuraes. Tente recarregar a pgina.'); return; }
+  const verifier = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2,'0')).join('');
+  localStorage.setItem('yt_verifier', verifier);
+  const encoder = new TextEncoder();
+  const digest = await crypto.subtle.digest('SHA-256', encoder.encode(verifier));
+  const challenge = btoa(String.fromCharCode(...new Uint8Array(digest))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+  const params = new URLSearchParams({
+    client_id: YT_CLIENT_ID, redirect_uri: YT_REDIRECT, response_type: 'code',
+    scope: YT_SCOPE, code_challenge: challenge, code_challenge_method: 'S256',
+    access_type: 'offline', prompt: 'consent'
+  });
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+
+async function trocarCodePorToken(code) {
+  const verifier = localStorage.getItem('yt_verifier');
+
+  console.log('[YT] trocarCodePorToken iniciado');
+  console.log('[YT] verifier presente:', !!verifier);
+  console.log('[YT] code (primeiros 20):', code?.substring(0,20));
+
+  const btn = document.getElementById('btnConectarYT');
+  if (btn) { btn.textContent = 'Conectando YouTube...'; btn.disabled = true; }
+
+  if (!verifier) {
+    console.warn('[YT] PKCE verifier no encontrado no localStorage');
+  }
+  if (verifier) localStorage.removeItem('yt_verifier');
+
+  try {
+    if (!YT_CLIENT_ID || !YT_CLIENT_SECRET) await carregarConfiguracoes();
+    console.log('[YT] client_id carregado:', !!YT_CLIENT_ID);
+    console.log('[YT] redirect_uri:', YT_REDIRECT);
+
+    const payload = { code, client_id: YT_CLIENT_ID, client_secret: YT_CLIENT_SECRET, redirect_uri: YT_REDIRECT };
+    if (verifier) payload.code_verifier = verifier;
+
+    const resp = await fetch(`${YT_WORKER}/exchange-token`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await resp.json();
+
+    console.log('[YT] Resposta do worker:', JSON.stringify(data));
+    if (data.success && data.access_token) {
+      ytAccessToken = data.access_token;
+      if (data.refresh_token) {
+        await getSB().from('config').upsert({
+          id: 'youtube',
+          data: {
+            refresh_token: data.refresh_token,
+            atualizado_em: new Date().toISOString(),
+            configurado_por: window._adminUid || 'admin'
+          }
+        });
+        console.log('[YT] refresh_token salvo no Supabase');
+      } else {
+        console.warn('[YT]  Sem refresh_token - access_token vlido por 1h');
+      }
+      atualizarBotaoYouTube();
+      alert('YouTube conectado com sucesso!');
+    } else {
+      const errMsg = data.error || data.google_detail || 'Resposta invalida';
+      console.error('[YT] Erro:', errMsg, data);
+      alert('Falha ao conectar YouTube:\n' + errMsg + '\n\nAbra o Console (F12) para mais detalhes.');
+    }
+  } catch (err) {
+    console.error('Erro trocarCodePorToken:', err);
+    alert('Erro de rede ao conectar YouTube: ' + err.message);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function uploadYouTubeDireto(file, titulo, descricao) {
+  if (!ytAccessToken) {
+    const { data: _ytDoc } = await getSB().from('config').select('data').eq('id','youtube').single();
+    if (_ytDoc?.data?.refresh_token) {
+      const ok = await renovarAccessToken(_ytDoc.data.refresh_token);
+      if (!ok) throw new Error('No foi possvel renovar o token. Clique em "Reconectar YouTube".');
+    } else { throw new Error('YouTube nao conectado. Clique em "Conectar YouTube" primeiro.'); }
+  }
+  const progressBar  = document.getElementById('uploadProgressBar');
+  const progressPct  = document.getElementById('uploadProgressPercent');
+  const progressText = document.getElementById('uploadProgressTextUniversal');
+  progressText.textContent = ' Iniciando upload no YouTube...';
+  const metadata = {
+    snippet: { title: titulo || 'Video', description: descricao || '', categoryId: '27' },
+    status:  { privacyStatus: 'unlisted', selfDeclaredMadeForKids: false }
+  };
+  const initResp = await fetch(`${YT_WORKER}/init-upload`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accessToken: ytAccessToken, metadata, fileSize: file.size, fileType: file.type || 'video/mp4' })
+  });
+  const initData = await initResp.json();
+  if (!initData.success) throw new Error(initData.error || 'Erro ao iniciar upload');
+  const uploadUrl = initData.uploadUrl;
+  const CHUNK = 5 * 1024 * 1024;
+  let offset = 0;
+  while (offset < file.size) {
+    const end = Math.min(offset + CHUNK, file.size);
+    const chunk = file.slice(offset, end);
+    const pct = Math.round((end / file.size) * 95);
+    progressBar.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+    progressText.textContent = ` Enviando... ${(end/(1024*1024)).toFixed(0)}MB de ${(file.size/(1024*1024)).toFixed(0)}MB`;
+    const chunkResp = await fetch(`${YT_WORKER}/upload-chunk`, {
+      method: 'POST',
+      headers: { 'Content-Type': file.type || 'video/mp4', 'X-Upload-Url': uploadUrl, 'X-Content-Range': `bytes ${offset}-${end-1}/${file.size}`, 'X-Content-Type': file.type || 'video/mp4' },
+      body: chunk
+    });
+    const chunkData = await chunkResp.json();
+    if (!chunkData.success) throw new Error(chunkData.error || 'Erro no envio do chunk');
+    if (chunkData.done) {
+      progressBar.style.width = '100%'; progressPct.textContent = '100%';
+      progressText.textContent = 'Video publicado no YouTube!';
+      return { videoId: chunkData.videoId, embedURL: chunkData.embedURL, watchURL: chunkData.watchURL };
+    }
+    offset = chunkData.range ? parseInt(chunkData.range.split('-')[1]) + 1 : end;
+  }
+  throw new Error('Upload no completou corretamente');
+}
+
+function atualizarBotaoYouTube() {
+  const btn = document.getElementById('btnConectarYT');
+  if (!btn) return;
+
+  // Boto de conexo s visvel para o superadmin
+  // Admins comuns usam o token salvo pelo superadmin sem precisar ver o boto
+  if (!window._isSuperAdmin) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  btn.style.display = '';
+  if (ytAccessToken) {
+    btn.textContent = 'YouTube Conectado';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    btn.onclick = desconectarYouTube;
+    btn.title = 'Clique para desconectar e reconectar';
+  } else {
+    btn.textContent = ' Conectar YouTube';
+    btn.style.background = '#ff0000';
+    btn.style.color = '#fff';
+    btn.onclick = autenticarYouTube;
+    btn.title = 'Clique para conectar ao YouTube';
+  }
+}
+
+async function desconectarYouTube() {
+  if (!confirm('Desconectar o YouTube? Voce precisara reconectar para enviar videos.')) return;
+  ytAccessToken = null;
+  try {
+    await getSB().from('config').delete().eq('id','youtube');
+  } catch(e) {}
+  atualizarBotaoYouTube();
+  alert('YouTube desconectado. Clique em "Conectar YouTube" para reconectar.');
+}
+
+// ..............................................
+// SISTEMA DE PERMISS.ES ?" SUPERADMIN
+// ..............................................
+
+// Permissoes disponiveis com labels
+const TODAS_permissaoES = [
+  { id: 'posts',       icon: '', label: 'Publicacoes',      desc: 'Criar e excluir posts' },
+  { id: 'comentarios', icon: '', label: 'Comentarios',      desc: 'Ver, responder e excluir Comentarios' },
+  { id: 'alunos',      icon: '', label: 'Aprovar Alunos',   desc: 'Aprovar, rejeitar e revogar alunos' },
+  { id: 'planilha',    icon: '', label: 'Planilha & Fotos', desc: 'Registrar trades e enviar fotos' },
+  { id: 'youtube',     icon: '?',  label: 'YouTube',          desc: 'Postar Videos diretamente no YouTube via integrao OAuth' },
+];
+
+// UID do superadmin (preenchido no login)
+window._isSuperAdmin = false;
+// permissaoes do admin logado
+window._adminPerms = null; // null = superadmin (acesso total), [] ou array = admin com restricoes
+
+// Verifica se o admin logado tem uma permissao especfica
+function temPermissao(perm) {
+  if (window._isSuperAdmin) return true;
+  if (!window._adminPerms) return true;
+  return Array.isArray(window._adminPerms) && window._adminPerms.includes(perm);
+}
+
+// Aplica visibilidade das abas e elementos baseado nas permissaoes
+function aplicarpermissaoesUI() {
+  // Mapa aba -> id do elemento -> permissao necessria
+  const abas = [
+    { id: 'tabPosts',       secao: 'posts',       perm: () => true },
+    { id: 'tabAprovacoes',  secao: 'aprovacoes',  perm: () => true },
+    { id: 'tabPlanilha',    secao: 'planilha',    perm: () => true },
+    { id: 'tabAdmins',      secao: 'admins',      perm: () => window._isSuperAdmin     },
+  ];
+
+  abas.forEach(a => {
+    const el = document.getElementById(a.id);
+    if (el) el.style.display = a.perm() ? '' : 'none';
+  });
+
+  // Ativa a primeira aba que o usuario pode ver
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+  const primeira = abas.find(a => {
+    const el = document.getElementById(a.id);
+    return el && el.style.display !== 'none';
+  });
+
+  if (primeira) {
+    const tabEl = document.getElementById(primeira.id);
+    const secEl = document.getElementById(primeira.secao + '-section');
+    if (tabEl) tabEl.classList.add('active');
+    if (secEl) secEl.classList.add('active');
+    if (primeira.secao === 'posts')      carregarPosts();
+    else if (primeira.secao === 'aprovacoes') carregarUsuarios();
+    else if (primeira.secao === 'planilha')   carregarUsuarios();
+    else if (primeira.secao === 'admins')     carregarAdmins();
+  }
+
+  // Revela a barra de abas sem flash
+  const tabsBar = document.getElementById('tabsBar');
+  if (tabsBar) tabsBar.style.visibility = '';
+}
+
+// Carrega dados do superadmin e lista de admins
+async function carregarAdmins() {
+  try {
+    const { data: adminsData, error } = await getSB().from('users').select('*').eq('role','admin');
+    if (error) throw error;
+    const admins = adminsData || [];
+
+    // Stats
+    document.getElementById('stat-total-admins').textContent = admins.length;
+    document.getElementById('stat-admins-ativos').textContent = admins.length;
+    document.getElementById('badge-admins').textContent = admins.length + ' admin' + (admins.length !== 1 ? 's' : '');
+
+    // Conta alunosAprovados elegveis (no so admins)
+    const { data: _usersAprov } = await getSB().from('users').select('id,nome,email,role').eq('aprovado',true).neq('role','admin');
+    let elegiveis = 0;
+    const selectEl = document.getElementById('selectAlunoAdmin');
+    selectEl.innerHTML = '<option value="">- Escolha um aluno aprovado -</option>';
+
+    (_usersAprov || []).forEach(d => {
+      if (d.role === 'admin') return;
+      elegiveis++;
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = (d.nome || d.email || d.id) + ' - ' + (d.email || '');
+      opt.dataset.nome = d.nome || d.email || '';
+      selectEl.appendChild(opt);
+    });
+    document.getElementById('stat-admins-pendentes').textContent = elegiveis;
+
+    // Renderiza lista de admins
+    const lista = document.getElementById('lista-admins');
+    if (admins.length === 0) {
+      lista.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-muted);">Nenhum administrador cadastrado ainda.</div>';
+      return;
+    }
+
+    lista.innerHTML = admins.map(a => renderAdminCard(a)).join('');
+
+  } catch (err) {
+    console.error('Erro carregarAdmins:', err);
+    document.getElementById('lista-admins').innerHTML = '<p style="color:var(--red);padding:16px;">Erro: ' + err.message + '</p>';
+  }
+}
+
+function renderAdminCard(a) {
+  const av = avatarHtml(a.nome || a.email || '?', a.foto_url || null, 42);
+  const nome = a.nome || '-';
+  const email = a.email || '-';
+  const isSuperA = !a.permissaoes; // null/undefined = superadmin (acesso total)
+  const perms = a.permissaoes || [];
+
+  // Tags de permissaoes
+  const permTags = isSuperA ?
+    '<span class="superadmin-badge">Super Admin</span>'
+    : TODAS_permissaoES.map(p => {
+        const has = perms.includes(p.id);
+        return `<span class="perm-tag${has ? '' : ' perm-off'}" title="${p.desc}">${p.icon} ${p.label}</span>`;
+      }).join('');
+
+  const editBtn = (window._isSuperAdmin && a.id !== window._adminUid) ?
+    `<button onclick="abrirModalpermissaoes('${a.id}','${(a.nome||a.email||'').replace(/'/g,"\\'")}',${JSON.stringify(a.permissaoes||null).replace(/"/g,"'")})"
+         style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s;"
+         onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.1)'"> Editar</button>`
+    : (a.id === window._adminUid ? '<span style="font-size:11px;color:var(--text-muted);flex-shrink:0;"> Voce</span>' : '');
+
+  return `
+    <div class="admin-card">
+      ${av}
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;">${nome}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">${email}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">${permTags}</div>
+      </div>
+      ${editBtn}
+    </div>`;
+}
+
+// Promover aluno selecionado a admin
+async function promoverAdmin() {
+  const select = document.getElementById('selectAlunoAdmin');
+  const uid = select.value;
+  if (!uid) { mostrarAlerta('alert-admins', 'Selecione um aluno primeiro.', 'error'); return; }
+
+  const perms = TODAS_permissaoES
+    .filter(p => document.getElementById('perm_' + p.id)?.checked)
+    .map(p => p.id);
+
+  if (perms.length === 0) {
+    mostrarAlerta('alert-admins', 'Selecione ao menos uma permissao.', 'error'); return;
+  }
+
+  const nomeAluno = select.options[select.selectedIndex]?.dataset.nome || uid;
+  if (!confirm('Promover ' + nomeAluno + ' a administrador com ' + perms.length + ' permissao(es)?')) return;
+
+  try {
+    await getSB().from('users').update({ role:'admin', permissaoes:perms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() }).eq('id',uid);
+    mostrarAlerta('alert-admins', '' + nomeAluno + ' agora administrador!', 'success');
+    // Reset form
+    select.value = '';
+    TODAS_permissaoES.forEach(p => { const el = document.getElementById('perm_' + p.id); if (el) el.checked = false; });
+    carregarAdmins();
+  } catch (err) {
+    mostrarAlerta('alert-admins', 'Erro: ' + err.message, 'error');
+  }
+}
+
+// Modal editar permissaoes
+let _editingAdminId = null;
+
+function abrirModalpermissaoes(uid, nome, permsAtual) {
+  _editingAdminId = uid;
+  document.getElementById('editPermNome').textContent = ' ' + nome;
+
+  const container = document.getElementById('editPermCheckboxes');
+  container.innerHTML = TODAS_permissaoES.map(p => {
+    const has = permsAtual === null ? true : (Array.isArray(permsAtual) && permsAtual.includes(p.id));
+    return `
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;"
+             onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
+        <input type="checkbox" id="edit_perm_${p.id}" value="${p.id}" ${has ? 'checked' : ''} style="width:16px;height:16px;accent-color:var(--blue);">
+        <div>
+          <div style="font-size:13px;font-weight:700;">${p.icon} ${p.label}</div>
+          <div style="font-size:11px;color:var(--text-muted);">${p.desc}</div>
+        </div>
+      </label>`;
+  }).join('');
+
+  const modal = document.getElementById('modalEditarpermissaoes');
+  modal.style.display = 'flex';
+}
+
+function fecharModalpermissaoes() {
+  document.getElementById('modalEditarpermissaoes').style.display = 'none';
+  _editingAdminId = null;
+}
+
+async function salvarpermissaoes() {
+  if (!_editingAdminId) return;
+  const novasPerms = TODAS_permissaoES
+    .filter(p => document.getElementById('edit_perm_' + p.id)?.checked)
+    .map(p => p.id);
+  if (novasPerms.length === 0) { alert('Selecione ao menos uma permissao.'); return; }
+  try {
+    await getSB().from('users').update({ permissaoes:novasPerms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() }).eq('id',_editingAdminId);
+    fecharModalpermissaoes();
+    mostrarAlerta('alert-admins', 'Permissoes atualizadas!', 'success');
+    carregarAdmins();
+  } catch (err) { alert('Erro: ' + err.message); }
+}
+
+async function rebaixarAdmin() {
+  if (!_editingAdminId) return;
+  if (!confirm('Remover este administrador? Ele voltara a ser aluno.')) return;
+  try {
+    await getSB().from('users').update({ role:'aluno', permissaoes:null, promoted_by:null, promoted_at:null }).eq('id',_editingAdminId);
+    fecharModalpermissaoes();
+    mostrarAlerta('alert-admins', 'Admin removido, voltou a ser aluno.', 'success');
+    carregarAdmins();
+  } catch (err) { alert('Erro: ' + err.message); }
+}
+
+
+// ..............................................
+// AUTENTICACAO
+// ..............................................
+getSB().auth.getSession().then(async ({ data: { session } }) => {
+  const user = session?.user;
+  if (!user) { window.location.href = 'login.html'; return; }
+  try {
+    const { data: adminData, error: _authErr } = await getSB().from('users').select('*').eq('id', user.id).single();
+    if (_authErr || !adminData || adminData.role !== 'admin') {
+      alert('Acesso negado.');
+      await getSB().auth.signOut();
+      window.location.href = 'login.html';
+      return;
+    }
+    window._adminNome = adminData.nome || user.user_metadata?.full_name || user.email.split('@')[0];
+    window._adminUid = user.id;
+    window._adminEmail = user.email;
+    window._adminFotoUrl = adminData.foto_url || user.user_metadata?.avatar_url || null;
+
+    // Permissoes: null/undefined = superadmin (acesso total); array = admin com restricoes
+    const perms = adminData.permissaoes;
+    window._isSuperAdmin = !perms || !Array.isArray(perms);
+    window._adminPerms = window._isSuperAdmin ? null : perms;
+
+    document.getElementById('adminName').textContent = window._adminNome;
+    atualizarAvatarAdmin();
+    aplicarpermissaoesUI();
+    inicializarVisualizacao();
+
+    await carregarConfiguracoes();
+    if (temPermissao('youtube')) await inicializarYouTubeAuth();
+    carregarPosts();
+    carregarUsuarios();
+    if (window._isSuperAdmin) carregarAdmins();
+  } catch (error) {
+    console.error('Erro auth admin:', error);
+    const postsEl = document.getElementById('posts-list');
+    if (postsEl) postsEl.innerHTML = '<div style="padding:20px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;"><p style="color:#ef4444;font-weight:700;">Erro de inicializacao</p><p style="color:#94a3b8;font-size:13px;margin-top:8px;">' + error.message + '</p></div>';
+  }
+});
+
+// ..............................................
+// AUXILIARES
+// ..............................................
+function switchTab(tabName) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(tab => {
+    const oc = tab.getAttribute('onclick') || '';
+    if (oc.includes("'" + tabName + "'")) tab.classList.add('active');
+  });
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById(tabName + '-section');
+  if (sec) sec.classList.add('active');
+  if (tabName === 'posts') carregarPosts();
+  else if (tabName === 'aprovacoes') carregarUsuarios();
+  else if (tabName === 'planilha') carregarUsuarios();
+  else if (tabName === 'admins') carregarAdmins();
+}
+
+async function logout() {
+  if (!confirm('Deseja realmente sair?')) return;
+  try {
+    await getSB().auth.signOut({ scope: 'local' });
+  } catch (error) {
+    console.warn('Falha ao encerrar sesso local:', error);
+  }
+
+  try {
+    await getSB().auth.signOut({ scope: 'global' });
+  } catch (error) {
+    console.warn('Falha ao encerrar sesso global:', error);
+  }
+
+  try {
+    localStorage.removeItem('supabase.auth.token');
+    sessionStorage.removeItem('supabase.auth.token');
+  } catch (error) {
+    console.warn('Falha ao limpar storage de autenticacao:', error);
+  }
+
+  window.location.replace('login.html');
+}
+
+function mostrarAlerta(id, mensagem, tipo) {
+  const el = document.getElementById(id);
+  el.textContent = mensagem; el.className = 'alert ' + tipo; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 6000);
+}
+
+function tempoRelativo(ts) {
+  if (!ts) return '';
+  const date = ts instanceof Date ? ts : (ts.toDate ? ts.toDate() : new Date(ts));
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 60) return 'agora mesmo';
+  if (diff < 3600) return `h ${Math.floor(diff/60)} min`;
+  if (diff < 86400) return `h ${Math.floor(diff/3600)}h`;
+  if (diff < 604800) return `h ${Math.floor(diff/86400)} dia${Math.floor(diff/86400)>1?'s':''}`;
+  return date.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+}
+
+function avatarHtml(nome, fotoUrl, size) {
+  size = size || 34;
+  const letra = (nome||'?').charAt(0).toUpperCase();
+  const style = 'width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:' + Math.floor(size*0.38) + 'px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden;';
+  const inner = fotoUrl ? '<img src="' + fotoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.textContent=\'' + letra + '\'">' : letra;
+  return '<div style="' + style + '">' + inner + '</div>';
+}
+
+// ..............................................
+// UPLOAD UNIVERSAL
+// ..............................................
+let arquivoUniversal = null;
+let tipoArquivo = null;
+
+const uploadAreaUniversal        = document.getElementById('uploadAreaUniversal');
+const fileInputUniversal         = document.getElementById('postArquivo');
+const uploadPlaceholderUniversal = document.getElementById('uploadPlaceholderUniversal');
+const uploadPreviewUniversal     = document.getElementById('uploadPreviewUniversal');
+const uploadProgressUniversal    = document.getElementById('uploadProgressUniversal');
+
+uploadAreaUniversal.addEventListener('click', () => fileInputUniversal.click());
+['dragenter','dragover','dragleave','drop'].forEach(ev => uploadAreaUniversal.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
+['dragenter','dragover'].forEach(ev => uploadAreaUniversal.addEventListener(ev, () => uploadAreaUniversal.classList.add('dragover')));
+['dragleave','drop'].forEach(ev => uploadAreaUniversal.addEventListener(ev, () => uploadAreaUniversal.classList.remove('dragover')));
+uploadAreaUniversal.addEventListener('drop', e => { if (e.dataTransfer.files[0]) handleArquivoUniversal(e.dataTransfer.files[0]); });
+fileInputUniversal.addEventListener('change', e => { if (e.target.files[0]) handleArquivoUniversal(e.target.files[0]); });
+
+function handleArquivoUniversal(file) {
+  if (file.size > 500 * 1024 * 1024) { alert('Arquivo muito grande. Maximo 500MB'); return; }
+  arquivoUniversal = file;
+  tipoArquivo = file.type.startsWith('image/') ? 'imagem' : file.type.startsWith('video/') ? 'video' : 'pdf';
+  uploadPlaceholderUniversal.style.display = 'none';
+  uploadPreviewUniversal.style.display = 'block';
+  const previewContent = document.getElementById('previewContent');
+  const sizeMB = (file.size / (1024*1024)).toFixed(2);
+  if (tipoArquivo === 'imagem') {
+    const reader = new FileReader();
+    reader.onload = e => { previewContent.innerHTML = `<img src="${e.target.result}" style="max-width:100%;max-height:300px;border-radius:8px;margin-bottom:12px;"><p style="font-size:13px;color:var(--text-muted);">Imagem: ${file.name} (${sizeMB} MB)</p>`; };
+    reader.readAsDataURL(file);
+  } else if (tipoArquivo === 'video') {
+    previewContent.innerHTML = `<div style="padding:24px;background:rgba(255,0,0,0.05);border:1px solid rgba(255,0,0,0.2);border-radius:8px;margin-bottom:12px;"><span style="font-size:36px;font-weight:800;">VIDEO</span><p style="font-size:16px;font-weight:700;margin:12px 0;">${file.name}</p><p style="font-size:13px;color:var(--text-muted);">${sizeMB} MB</p><span class="yt-badge" style="margin-top:8px;display:inline-flex;">Sera publicado no YouTube como nao listado</span></div>`;
+  } else {
+    previewContent.innerHTML = `<div style="padding:24px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:12px;"><span style="font-size:36px;font-weight:800;">PDF</span><p style="font-size:16px;font-weight:600;margin:12px 0;">${file.name}</p><p style="font-size:13px;color:var(--text-muted);">${sizeMB} MB</p></div>`;
+  }
+}
+
+function removerArquivoUniversal() {
+  arquivoUniversal = null; tipoArquivo = null; fileInputUniversal.value = '';
+  document.getElementById('postYoutubeEmbedURL').value = '';
+  uploadPlaceholderUniversal.style.display = 'block';
+  uploadPreviewUniversal.style.display = 'none';
+  document.getElementById('previewContent').innerHTML = '';
+}
+
+async function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ..............................................
+// PUBLICAR POST
+// ..............................................
+document.getElementById('formPost').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!temPermissao('posts')) { alert('Sem permissao para criar posts.'); return; }
+  const btnPost = document.getElementById('btnPost');
+  btnPost.disabled = true; btnPost.textContent = 'Publicando...';
+  try {
+    let finalMidiaURL = null, midiaTipo = null, youtubeEmbedURL = null, driveFileId = null, youtubeVideoId = null;
+    if (arquivoUniversal) {
+      uploadPreviewUniversal.style.display = 'none'; uploadProgressUniversal.style.display = 'block';
+      const sizeMB = (arquivoUniversal.size / (1024*1024)).toFixed(2);
+      const progressBar = document.getElementById('uploadProgressBar');
+      const progressPercent = document.getElementById('uploadProgressPercent');
+      let progressInterval = null;
+      try {
+        if (tipoArquivo === 'video') {
+          if (!ytAccessToken) throw new Error('Clique em "Conectar YouTube" no topo da pagina antes de enviar videos.');
+          const titulo = document.getElementById('postTitulo').value.trim() || arquivoUniversal.name;
+          const descricao = document.getElementById('postTexto').value.trim();
+          const resultado = await uploadYouTubeDireto(arquivoUniversal, titulo, descricao);
+          youtubeEmbedURL = resultado.embedURL; youtubeVideoId = resultado.videoId;
+          finalMidiaURL = resultado.watchURL; midiaTipo = 'youtube';
+        } else {
+          document.getElementById('uploadProgressTextUniversal').textContent = `Enviando ${sizeMB}MB para Google Drive...`;
+          let progress = 0;
+          progressInterval = setInterval(() => { progress += Math.random() * 8; if (progress > 85) progress = 85; progressBar.style.width = progress + '%'; progressPercent.textContent = Math.round(progress) + '%'; }, 300);
+          const base64 = await fileToBase64(arquivoUniversal);
+          const params = new URLSearchParams();
+          params.append('acao', 'uploadArquivo'); params.append('arquivo', base64);
+          params.append('nome', arquivoUniversal.name); params.append('tipo', arquivoUniversal.type);
+          const response = await fetch(`${YT_WORKER}/apps-script`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ appsScriptUrl: APPS_SCRIPT_URL, params: Object.fromEntries(params) })
+          });
+          const resultado = await response.json();
+          clearInterval(progressInterval);
+          if (!resultado.success) throw new Error(resultado.error || 'Erro no upload');
+          driveFileId = resultado.id;
+          finalMidiaURL = tipoArquivo === 'imagem' ? `https://drive.google.com/uc?export=view&id=${resultado.id}` : `https://drive.google.com/uc?export=download&id=${resultado.id}`;
+          midiaTipo = tipoArquivo;
+        }
+        progressBar.style.width = '100%'; progressPercent.textContent = '100%';
+      } catch (uploadError) { clearInterval(progressInterval); throw uploadError; }
+      await new Promise(r => setTimeout(r, 800));
+      uploadProgressUniversal.style.display = 'none'; uploadPreviewUniversal.style.display = 'block';
+    }
+    const titulo = document.getElementById('postTitulo').value.trim();
+    if (!titulo) { alert('Preencha o titulo do post'); throw new Error('Titulo obrigatorio'); }
+    const { data: _newPost, error: _postErr } = await getSB().from('posts').insert({
+      titulo, texto: document.getElementById('postTexto').value.trim(),
+      categoria: document.getElementById('postCategoria').value,
+      link: document.getElementById('postLink').value || null,
+      midia_url: finalMidiaURL, midia_tipo: midiaTipo, youtube_embed_url: youtubeEmbedURL,
+      youtube_video_id: youtubeVideoId || null, drive_file_id: driveFileId || null,
+      criado_em: new Date().toISOString(),
+      autor_id: window._adminUid
+    }).select().single();
+    if (_postErr) throw _postErr;
+    mostrarAlerta('alert-post', 'Post publicado com sucesso!', 'success');
+    document.getElementById('formPost').reset();
+    removerArquivoUniversal();
+    carregarPosts();
+  } catch (error) {
+    console.error('Erro ao publicar:', error);
+    mostrarAlerta('alert-post', 'Erro: ' + error.message, 'error');
+    uploadProgressUniversal.style.display = 'none';
+    if (arquivoUniversal) uploadPreviewUniversal.style.display = 'block';
+  }
+  btnPost.disabled = false; btnPost.textContent = 'Publicar Post';
+});
+
+// ..............................................
+// CARREGAR POSTS
+// ..............................................
+function buildPostItemHTML(doc, isNovo) {
+  const post = doc.data ? doc.data() : doc;
+  const postId = doc.id || post.id;
+  const criadoEm = post.criado_em || post.created_at || post.criadoEm || null;
+  const data = criadoEm ? new Date(criadoEm).toLocaleDateString('pt-BR') : 'Agora';
+  const autorUid = post.autor_id || post.autorUid || post.autor_uid || post.autorId || null;
+  const titulo = post.titulo || 'Post sem Titulo';
+  const texto = typeof post.texto === 'string' ? post.texto : '';
+  const categoria = post.categoria || 'Sem categoria';
+
+  let midiaHTML = '';
+  if (post.youtube_embed_url) {
+    midiaHTML = `<div style="position:relative;width:280px;height:158px;background:#000;border-radius:10px;overflow:hidden;flex-shrink:0;">
+      <iframe src="${post.youtube_embed_url}" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+    </div>`;
+  } else if (post.midia_url && post.midia_tipo === 'imagem') {
+    midiaHTML = `<img src="${post.midia_url}" class="post-image" alt="${post.titulo}" onerror="this.style.display='none'">`;
+  } else if (post.midia_url && post.midia_tipo === 'pdf') {
+    midiaHTML = `<div style="width:80px;height:80px;background:rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;">PDF</div>`;
+  }
+
+  const canEdit = window._isSuperAdmin || (temPermissao('posts') && autorUid === window._adminUid);
+  const actionBtns = canEdit
+    ? `<button class="btn btn-sm" onclick="abrirEditarPost('${postId}')" style="background:rgba(99,102,241,0.15);color:var(--blue);border:1px solid rgba(99,102,241,0.3);">Editar</button>
+       <button class="btn btn-sm btn-danger" onclick="deletarPost('${postId}')">Excluir</button>`
+    : `<span style="font-size:11px;color:var(--text-muted);padding:4px 8px;">Post de outro admin</span>`;
+
+  return `<div class="post-item${isNovo ? ' post-item--novo' : ''}" id="post-item-${postId}" style="${isNovo ? 'animation:slideInPost .4s cubic-bezier(0.34,1.56,0.64,1);' : ''}">
+    ${midiaHTML}
+    <div class="post-content">
+      ${isNovo ? '<span style="display:inline-block;background:#10b981;color:#000;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">Novo</span>' : ''}
+      <div class="post-title">${titulo}</div>
+      ${texto.trim() ? `<div class="post-desc" style="font-size:12px;color:var(--text-muted);line-height:1.5;margin:4px 0 6px;font-style:italic;"><span style="color:var(--blue);font-style:normal;font-weight:700;font-size:11px;">Descricao</span> ${texto.substring(0,140)}${texto.length>140?'...':''}</div>` : ''}
+      <div class="post-meta" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+         ${data} . ${categoria} . ${post.autor || post.autor_nome || post.autor_name || 'Admin'}
+        ${post.youtube_embed_url ? '<span class="yt-badge">YouTube</span>' : ''}
+      </div>
+      <div class="post-actions">
+        <button class="btn btn-sm" onclick="toggleComentariosAdmin('${postId}')" style="background:var(--blue);color:#fff;">
+          Comentarios (<span id="count-admin-${postId}">...</span>)
+        </button>
+        ${actionBtns}
+      </div>
+      <div id="comentarios-admin-${postId}" style="display:none;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
+        <div id="lista-admin-${postId}"></div>
+        <div style="margin-top:16px;display:flex;gap:10px;align-items:flex-start;">
+          <div id="adminAvatarComent-${postId}" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden;margin-top:2px;"></div>
+          <div style="flex:1;">
+          <textarea id="texto-admin-${postId}" placeholder="Comentario como admin..." style="width:100%;min-height:80px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+            <button class="btn btn-sm" onclick="enviarComentarioAdmin('${postId}')" style="margin-top:8px;">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function carregarPosts() {
+  const container = document.getElementById('posts-list');
+  if (!container) return;
+
+  if (window._postsChannel) { getSB().removeChannel(window._postsChannel); window._postsChannel = null; }
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Carregando posts...</p></div>';
+
+  function _mostrarFalhaPosts(mensagem) {
+    container.innerHTML = `
+      <div style="padding:20px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.24);border-radius:12px;">
+        <p style="color:var(--red);font-weight:700;margin-bottom:10px;">${mensagem}</p>
+        <button class="btn btn-secondary btn-sm" onclick="carregarPosts()">Tentar novamente</button>
+      </div>`;
+  }
+
+  async function _consultaComTimeout(consulta, tempoMs) {
+    return await Promise.race([
+      consulta,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('O carregamento dos posts demorou demais.')), tempoMs))
+    ]);
+  }
+
+  async function _renderPosts() {
+    try {
+      let postsData = null;
+      let error = null;
+
+      let resp = await _consultaComTimeout(
+        getSB()
+          .from('posts')
+          .select('*')
+          .order('criado_em', { ascending: false })
+          .limit(50),
+        9000
+      );
+
+      postsData = resp.data;
+      error = resp.error;
+
+      if (error) {
+        resp = await _consultaComTimeout(
+          getSB()
+            .from('posts')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(50),
+          9000
+        );
+        postsData = resp.data;
+        error = resp.error;
+      }
+
+      if (error) {
+        _mostrarFalhaPosts('Erro ao carregar posts: ' + error.message);
+        return;
+      }
+      if (!postsData?.length) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Nenhum post ainda.</p>';
+        return;
+      }
+      const snapshot = { docs: postsData.map(d => ({ id: d.id, data: () => d })), empty: false };
+      container.innerHTML = snapshot.docs.map(doc => buildPostItemHTML(doc, false)).join('');
+    } catch (err) {
+      console.error('Erro em _renderPosts:', err);
+      _mostrarFalhaPosts(err.message || 'Erro ao montar os posts.');
+    }
+  }
+
+  await _renderPosts();
+
+  // Realtime subscription
+  window._postsChannel = getSB()
+    .channel('admin-posts')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'posts' }, () => _renderPosts())
+    .subscribe();
+}
+
+function toggleComentariosAdmin(postId) {
+  const section = document.getElementById('comentarios-admin-' + postId);
+  const isOpen = section.style.display !== 'none';
+  if (isOpen) {
+    section.style.display = 'none';
+    // Para o listener ao fechar
+    if (_adminListeners[postId]) { _adminListeners[postId](); delete _adminListeners[postId]; }
+  } else {
+    section.style.display = 'block';
+    iniciarListenerAdmin(postId);
+  }
+}
+
+function iniciarListenerAdmin(postId) {
+  if (_adminListeners[postId]) return; // j ouvindo
+  const lista   = document.getElementById('lista-admin-' + postId);
+  const countEl = document.getElementById('count-admin-' + postId);
+  lista.innerHTML = '<p style="text-align:center;padding:16px;color:#64748b;font-size:13px;">Carregando...</p>';
+
+  async function _recarregarComentariosAdmin() {
+    try {
+      const { data: _coments, error } = await getSB()
+        .from('comentarios')
+        .select('*')
+        .eq('post_id', postId)
+        .order('criado_em', { ascending: true });
+
+      if (error) throw error;
+
+      const docs = _coments || [];
+      if (countEl) countEl.textContent = docs.length;
+
+      if (!docs.length) {
+        lista.innerHTML = '<p style="text-align:center;padding:16px;color:var(--text-muted);">Nenhum comentario ainda.</p>';
+        return;
+      }
+
+      let html = '';
+      docs.forEach(d => { html += renderComentarioAdmin(postId, d.id, d, false); });
+      lista.innerHTML = html;
+
+      docs.forEach(d => {
+        const el = document.getElementById('respAdminAv-' + d.id);
+        if (!el) return;
+        if (window._adminFotoUrl) el.innerHTML = '<img src="' + window._adminFotoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+        else el.textContent = (window._adminNome || 'A').charAt(0).toUpperCase();
+      });
+    } catch (err) {
+      lista.innerHTML = '<p style="color:var(--red);padding:16px;">Erro: ' + err.message + '</p>';
+    }
+  }
+
+  _recarregarComentariosAdmin();
+
+  const intervalId = setInterval(_recarregarComentariosAdmin, 15000);
+  _adminListeners[postId] = () => clearInterval(intervalId);
+}
+
+function renderComentarioAdmin(postId, docId, co, isNovo) {
+  const dateCriado = co.criado_em ? new Date(co.criado_em) : null;
+  const tempo = tempoRelativo(dateCriado);
+  const nomeAutor = co.autor || 'Aluno';
+  const av = avatarHtml(nomeAutor, co.foto_url || null, 34);
+
+  // Respostas
+  let respostasHtml = '';
+  if (co.respostas && co.respostas.length > 0) {
+    co.respostas.forEach((r, idx) => {
+      const rTempo = tempoRelativo(r.criado_em ? new Date(r.criado_em) : null);
+      const rAv = avatarHtml(r.autor||'?', r.foto_url||null, 28);
+      respostasHtml += `<div style="display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.06);border-left:3px solid #6366f1;border-radius:0 8px 8px 0;">
+        ${rAv}
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:12px;color:#a5b4fc;">${r.autor||'?'}</strong>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <span style="font-size:11px;color:#475569;">${rTempo}</span>
+              ${(window._isSuperAdmin || temPermissao('comentarios') || r.autor_id === window._adminUid) ? `<button onclick="deletarRespostaAdmin('${postId}','${docId}',${idx},'${r.autor_id||''}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;">Excluir</button>` : ''}
+            </div>
+          </div>
+          <p style="margin:0;font-size:13px;color:var(--text);line-height:1.5;">${r.texto}</p>
+        </div>
+      </div>`;
+    });
+  }
+
+  const animClass = isNovo ? 'novo-comentario' : '';
+  const animStyle = isNovo ? 'animation:slideInComment 0.35s cubic-bezier(0.4,0,0.2,1);' : '';
+
+  return `<div class="${animClass}" style="${animStyle}display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);padding:14px;border-radius:10px;margin-bottom:10px;transition:all 0.2s;">
+    <div onclick="verInfoUsuario('${co.autor_id||''}','${nomeAutor}')" title="Ver info" style="cursor:pointer;border:2px solid transparent;border-radius:50%;transition:border .2s;flex-shrink:0;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='transparent'">${av}</div>
+    <div style="flex:1;min-width:0;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <strong style="color:var(--accent);font-size:13px;">${nomeAutor}</strong>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;color:var(--text-muted);" title="${dateCriado ? dateCriado.toLocaleString('pt-BR') : ''}">${tempo}</span>
+          ${(window._isSuperAdmin || temPermissao('comentarios') || co.autor_id === window._adminUid) ? `<button onclick="deletarComentarioAdmin('${postId}','${docId}','${co.autor_id||''}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;" title="Deletar comentario">Excluir</button>` : ''}
+        </div>
+      </div>
+      <p style="margin:0 0 8px;font-size:14px;line-height:1.6;">${co.texto}${co.editado_em ? '<span style="font-size:11px;color:#64748b;margin-left:6px;font-style:italic;">(editado)</span>' : ''}</p>
+      ${respostasHtml}
+      <div id="form-resposta-admin-${docId}" style="display:none;margin-top:10px;">
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div id="respAdminAv-${docId}" style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden;margin-top:2px;"></div>
+          <div style="flex:1;">
+            <textarea id="texto-resposta-admin-${docId}" placeholder="Responder como admin..." style="width:100%;min-height:60px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.4);border-radius:8px;padding:10px;color:var(--text);font-family:inherit;font-size:13px;resize:vertical;"></textarea>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <button class="btn btn-sm" onclick="enviarRespostaAdmin('${postId}','${docId}')" style="background:#6366f1;color:#fff;">Responder</button>
+              <button class="btn btn-sm" onclick="document.getElementById('form-resposta-admin-${docId}').style.display='none'" style="background:rgba(255,255,255,0.1);color:var(--text);">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button onclick="mostrarFormRespostaAdmin('${docId}')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:12px;font-weight:600;padding:4px 0;margin-top:4px;">Responder</button>
+    </div>
+  </div>`;
+}
+
+function mostrarFormRespostaAdmin(comentarioId) {
+  const form = document.getElementById('form-resposta-admin-' + comentarioId);
+  if (form) { form.style.display = form.style.display === 'none' ? 'block' : 'none'; }
+}
+
+async function enviarRespostaAdmin(postId, comentarioId) {
+  const textarea = document.getElementById('texto-resposta-admin-' + comentarioId);
+  const texto = textarea.value.trim();
+  if (!texto) { alert('Digite uma resposta!'); return; }
+  const btn = textarea.nextElementSibling?.querySelector('button');
+  try {
+    if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+    textarea.disabled = true;
+    const resposta = {
+      texto,
+      autor: window._adminNome || 'Admin',
+      autor_id: window._adminUid,
+      foto_url: window._adminFotoUrl || null,
+      criado_em: new Date().toISOString()
+    };
+    const { data: _cDoc } = await getSB().from('comentarios').select('respostas').eq('id',comentarioId).single();
+    const _resps = _cDoc?.respostas || []; _resps.push(resposta);
+    await getSB().from('comentarios').update({ respostas: _resps }).eq('id',comentarioId);
+    textarea.value = '';
+    document.getElementById('form-resposta-admin-' + comentarioId).style.display = 'none';
+    // onSnapshot atualiza automaticamente
+  } catch (err) { alert('Erro ao enviar resposta: ' + err.message); }
+  finally { textarea.disabled = false; if (btn) { btn.disabled = false; btn.textContent = 'Responder'; } }
+}
+
+async function deletarRespostaAdmin(postId, comentarioId, idx, autorId) {
+  const ehPropria = autorId && autorId === window._adminUid;
+  if (!window._isSuperAdmin && !temPermissao('comentarios') && !ehPropria) {
+    alert('Sem permissao para excluir respostas de outros.'); return;
+  }
+  if (!confirm('Deletar esta resposta?')) return;
+  try {
+    const { data: _crFix } = await getSB().from('comentarios').select('respostas').eq('id',comentarioId).single();
+    const respostas = _crFix?.respostas || [];
+    respostas.splice(idx, 1);
+    await getSB().from('comentarios').update({ respostas }).eq('id',comentarioId);
+    await docRef.update({ respostas });
+    // onSnapshot atualiza automaticamente
+  } catch (err) { alert('Erro ao deletar resposta'); }
+}
+
+async function enviarComentarioAdmin(postId) {
+  const textarea = document.getElementById('texto-admin-' + postId);
+  const texto = textarea.value.trim();
+  if (!texto) { textarea.focus(); return; }
+  const btn = textarea.parentElement?.querySelector('.btn');
+  try {
+    textarea.disabled = true;
+    if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+    await getSB().from('comentarios').insert({ post_id: postId,
+      texto,
+      autor: window._adminNome || window._adminNome || 'Admin',
+      autor_id: window._adminUid,
+      foto_url: window._adminFotoUrl || null,
+      criado_em: new Date().toISOString()
+    });
+    textarea.value = '';
+    // onSnapshot atualiza automaticamente ?" sem recarregar
+  } catch (err) { alert('Erro ao enviar comentario: ' + err.message); }
+  finally { textarea.disabled = false; if (btn) { btn.disabled = false; btn.textContent = 'Enviar'; } }
+}
+
+async function deletarComentarioAdmin(postId, comentarioId, autorId) {
+  // Pode deletar se: superadmin OU tem permissao 'comentarios' OU e o proprio autor
+  const ehProprioComentario = autorId && autorId === window._adminUid;
+  if (!window._isSuperAdmin && !temPermissao('comentarios') && !ehProprioComentario) {
+    alert('Sem permissao para excluir comentarios de outros.'); return;
+  }
+  if (!confirm('Deletar este comentario?')) return;
+  try {
+    await getSB().from('comentarios').delete().eq('id',comentarioId);
+    // onSnapshot atualiza automaticamente
+  } catch (err) { alert('Erro ao deletar'); }
+}
+
+
+// ..............................................
+// USUARIOS
+// ..............................................
+// Armazena todos os alunos para filtragem local
+let _todosAlunos = [];
+
+async function carregarUsuarios() {
+  try {
+    const { data: _allUsers, error } = await getSB().from('users').select('*');
+    if (error) throw error;
+    _todosAlunos = [];
+    let pendentes = [];
+
+    (_allUsers||[]).forEach(doc => {
+      const user = doc;
+      if (user.role === 'admin') return;
+      const entry = { id: doc.id || user.id, ...user };
+      if (user.aprovado) _todosAlunos.push(entry);
+      else pendentes.push(entry);
+    });
+
+    // Stats
+    const total = pendentes.length + _todosAlunos.length;
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-aprovados').textContent = _todosAlunos.length;
+    document.getElementById('stat-pendentes').textContent = pendentes.length;
+    document.getElementById('badge-aprovados').textContent = _todosAlunos.length + ' aluno' + (_todosAlunos.length !== 1 ? 's' : '');
+    document.getElementById('badge-pendentes').textContent = pendentes.length + ' aguardando';
+
+    //Pendentes
+    if (pendentes.length === 0) {
+      document.getElementById('usuarios-pendentes').innerHTML =
+        '<div style="text-align:center;padding:24px;color:var(--text-muted);"><span style="font-size:40px;display:block;margin-bottom:8px;"></span>Nenhum aluno pendente</div>';
+    } else {
+      document.getElementById('usuarios-pendentes').innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${pendentes.map(u => renderAlunoCard(u, false)).join('')}
+        </div>`;
+    }
+
+    //Aprovados (respeita busca atual)
+    const busca = document.getElementById('buscaAlunos')?.value || '';
+    renderAprovados(busca);
+
+  } catch (error) {
+    console.error('Erro Usuarios:', error);
+    document.getElementById('usuarios-pendentes').innerHTML = '<p style="color:var(--red);padding:16px;">Erro: ' + error.message + '</p>';
+  }
+}
+
+function renderAlunoCard(u, aprovado) {
+  const av = avatarHtml(u.nome || u.email || '?', u.foto_url || null, 40);
+  const nome = u.nome || '-';
+  const email = u.email || '-';
+  const dataStr = u.created_at ? tempoRelativo(u.created_at) : '';
+  return `
+    <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:12px;transition:all .2s;"
+         onmouseover="this.style.borderColor='rgba(99,102,241,0.3)';this.style.background='rgba(99,102,241,0.07)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.background='rgba(99,102,241,0.04)'">
+      ${av}
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <strong style="font-size:14px;color:var(--text);">${nome}</strong>
+          ${aprovado ? 
+            '<span style="background:rgba(16,185,129,0.12);color:#10b981;border:1px solid rgba(16,185,129,0.2);border-radius:20px;padding:1px 8px;font-size:10px;font-weight:800;text-transform:uppercase;">Aprovado</span>'
+            : '<span style="background:rgba(249,115,22,0.12);color:#f97316;border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:1px 8px;font-size:10px;font-weight:800;text-transform:uppercase;">Pendente</span>'
+          }
+        </div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">${email}</div>
+        ${dataStr ? `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;opacity:.7;">Cadastrou ${dataStr}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+        ${!aprovado ? 
+          `<button onclick="aprovarUsuario('${u.id}')" style="background:#10b981;color:#000;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">Aprovar</button>
+             <button onclick="rejeitarUsuario('${u.id}')" style="background:rgba(239,68,68,0.12);color:#ef4444;border:1px solid rgba(239,68,68,0.2);padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.12)'">Rejeitar</button>`
+          : `<button onclick="revogarAprovacao('${u.id}')" style="background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'"> Revogar</button>`
+        }
+      </div>
+    </div>`;
+}
+
+function renderAprovados(busca) {
+  busca = (busca || '').toLowerCase().trim();
+  const filtrados = busca ?
+    _todosAlunos.filter(u => (u.nome||'').toLowerCase().includes(busca) || (u.email||'').toLowerCase().includes(busca))
+    : _todosAlunos;
+
+  const container = document.getElementById('usuarios-aprovados');
+  if (filtrados.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);">${
+      busca ? ' Nenhum aluno encontrado para <strong>"' + busca + '"</strong>' : ' Nenhum aluno aprovado ainda'
+    }</div>`;
+    return;
+  }
+
+  // Sort: by name
+  const sorted = [...filtrados].sort((a,b) => (a.nome||'').localeCompare(b.nome||''));
+  container.innerHTML = `<div style="display:flex;flex-direction:column;gap:10px;">${
+    sorted.map(u => renderAlunoCard(u, true)).join('')
+  }</div>`;
+}
+
+function filtrarAlunos(valor) {
+  renderAprovados(valor);
+}
+
+function exportarAlunos() {
+  if (_todosAlunos.length === 0) { alert('Nenhum aluno para exportar.'); return; }
+  const linhas = [['Nome','Email','Status']];
+  _todosAlunos.forEach(function(u) { linhas.push([u.nome||'', u.email||'', 'Aprovado']); });
+  const csv = linhas.map(function(r){ return r.map(function(c){ return '"' + String(c).replace(/"/g,'""') + '"'; }).join(','); }).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'alunos_aprovados_' + new Date().toISOString().slice(0,10) + '.csv';
+  link.click();
+}
+async function aprovarUsuario(uid) {
+  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
+  try { await getSB().from('users').update({ aprovado:true }).eq('id',uid); mostrarAlerta('alert-aprovacao','Aprovado!','success'); carregarUsuarios(); }
+  catch (err) { mostrarAlerta('alert-aprovacao','Erro ao aprovar','error'); }
+}
+async function rejeitarUsuario(uid) {
+  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
+  if (!confirm('Rejeitar e excluir este usuario?')) return;
+  try { await getSB().from('users').delete().eq('id',uid); mostrarAlerta('alert-aprovacao','Rejeitado','success'); carregarUsuarios(); }
+  catch (err) { mostrarAlerta('alert-aprovacao','Erro','error'); }
+}
+async function revogarAprovacao(uid) {
+  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
+  if (!confirm('Revogar aprovacao?')) return;
+  try { await getSB().from('users').update({ aprovado:false }).eq('id',uid); mostrarAlerta('alert-aprovacao','Revogado','success'); carregarUsuarios(); }
+  catch (err) { mostrarAlerta('alert-aprovacao','Erro','error'); }
+}
+
+// ..............................................
+// FOTOS DE TRADES
+// ..............................................
+let tradeFile = null;
+const uploadAreaTrade = document.getElementById('uploadAreaTrade');
+const fileInputTrade  = document.getElementById('fileInputTrade');
+['dragenter','dragover','dragleave','drop'].forEach(ev => uploadAreaTrade.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
+['dragenter','dragover'].forEach(ev => uploadAreaTrade.addEventListener(ev, () => { uploadAreaTrade.style.borderColor='var(--accent)'; }));
+['dragleave','drop'].forEach(ev => uploadAreaTrade.addEventListener(ev, () => { uploadAreaTrade.style.borderColor='var(--border)'; }));
+uploadAreaTrade.addEventListener('drop', e => { if (e.dataTransfer.files[0]) processarArquivoTrade(e.dataTransfer.files[0]); });
+uploadAreaTrade.addEventListener('click', () => fileInputTrade.click());
+fileInputTrade.addEventListener('change', e => { if (e.target.files[0]) processarArquivoTrade(e.target.files[0]); });
+
+function processarArquivoTrade(file) {
+  if (!file.type.startsWith('image/')) { alert('Apenas imagens.'); return; }
+  if (file.size > 10*1024*1024) { alert('Maximo 10MB'); return; }
+  tradeFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('previewImgTrade').src = e.target.result;
+    document.getElementById('uploadPlaceholderTrade').style.display = 'none';
+    document.getElementById('uploadPreviewTrade').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removerImagemTrade() {
+  tradeFile = null; fileInputTrade.value = '';
+  document.getElementById('uploadPlaceholderTrade').style.display = 'block';
+  document.getElementById('uploadPreviewTrade').style.display = 'none';
+}
+
+document.getElementById('formFotoTrade').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!temPermissao('planilha')) { alert('Sem permissao para enviar fotos.'); return; }
+  if (!tradeFile) { mostrarAlerta('alert-foto-trade','Selecione uma foto','error'); return; }
+  const btn = document.getElementById('btnFotoTrade');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    const dia = parseInt(document.getElementById('diaDoTrade').value, 10);
+    const mes = parseInt(document.getElementById('mesDoTrade').value, 10);
+    const ano = parseInt(document.getElementById('anoDoTrade').value, 10);
+    document.getElementById('uploadPreviewTrade').style.display = 'none';
+    document.getElementById('uploadProgressTrade').style.display = 'block';
+    const base64 = await fileToBase64(tradeFile);
+    const response = await fetch(`${YT_WORKER}/apps-script`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        appsScriptUrl: APPS_SCRIPT_URL,
+        params: {
+          dia,
+          mes,
+          ano,
+          nomeArquivo: tradeFile.name,
+          imagem: base64
+        }
+      })
+    });
+    const resultado = await response.json();
+    if (resultado.success) {
+      mostrarAlerta('alert-foto-trade', `Foto salva! (Linha ${resultado.linha})`, 'success');
+      document.getElementById('formFotoTrade').reset();
+      removerImagemTrade();
+    } else { throw new Error(resultado.error || 'Erro desconhecido'); }
+  } catch (error) {
+    mostrarAlerta('alert-foto-trade', 'Erro: ' + error.message, 'error');
+    document.getElementById('uploadPreviewTrade').style.display = 'block';
+  }
+  document.getElementById('uploadProgressTrade').style.display = 'none';
+  btn.disabled = false; btn.textContent = 'Salvar Foto do Trade';
+});
+
+// ..............................................
+// DADOS DO TRADE
+// ..............................................
+function calcularSemanaMes(dia, mes, ano) {
+  if (!dia) return '';
+  // Usa a grade do calendario (Dom-Sab) para definir a semana do mes.
+  const m = Number(mes);
+  const a = Number(ano);
+  if (!m || !a) return '';
+  const primeiro = new Date(a, m - 1, 1);
+  const offset = primeiro.getDay(); // 0=Dom ... 6=Sab
+  const semana = Math.floor((dia + offset - 1) / 7) + 1;
+  return 'SEMANA ' + semana;
+}
+function pad2(valor) {
+  return String(valor).padStart(2, '0');
+}
+function montarDataTrade(dia, mes, ano) {
+  return `${pad2(dia)}/${pad2(mes)}/${ano}`;
+}
+function montarDataTradeChave(dia, mes, ano) {
+  return `${ano}-${pad2(mes)}-${pad2(dia)}`;
+}
+function montarDataTradeIsoSeguro(dia, mes, ano) {
+  return `${ano}-${pad2(mes)}-${pad2(dia)}T12:00:00-03:00`;
+}
+document.getElementById('diaData').addEventListener('input', e => {
+  const dia = parseInt(e.target.value);
+  document.getElementById('semana').value = (dia >= 1 && dia <= 31) ? calcularSemanaMes(dia, mes, ano) : '';
+});
+window.addEventListener('DOMContentLoaded', () => {
+  const hoje = new Date();
+  document.getElementById('diaData').value = hoje.getDate();
+  document.getElementById('mesData').value = hoje.getMonth() + 1;
+  document.getElementById('anoData').value = hoje.getFullYear();
+  document.getElementById('semana').value = calcularSemanaMes(hoje.getDate(), hoje.getMonth() + 1, hoje.getFullYear());
+  document.getElementById('diaDoTrade').value = hoje.getDate();
+  document.getElementById('mesDoTrade').value = hoje.getMonth() + 1;
+  document.getElementById('anoDoTrade').value = hoje.getFullYear();
+});
+function toggleAtivo(ativo) {
+  const checked = document.getElementById(ativo+'Op').checked;
+  const fields = document.getElementById(ativo+'Fields');
+  fields.style.opacity = checked ? '1' : '0.4';
+  fields.style.pointerEvents = checked ? 'auto' : 'none';
+}
+async function salvarAtivo(dia, mes, ano, semana, alvo, pontos, trades, gains, stops, breakeven) {
+  const response = await fetch(`${YT_WORKER}/apps-script`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      appsScriptUrl: APPS_SCRIPT_URL,
+      params: {
+        acao: 'salvarTrade',
+        dia,
+        mes,
+        ano,
+        semana,
+        alvo,
+        pontos,
+        trades,
+        gains,
+        stops,
+        breakeven
+      }
+    })
+  });
+  return await response.json();
+}
+async function deletarPost(postId) {
+  if (!temPermissao('posts')) { alert('Sem permissao para excluir posts.'); return; }
+  if (!confirm('Excluir este post permanentemente? Esta acao nao pode ser desfeita.')) return;
+  try {
+    // Busca o post para verificar se tem video no YouTube
+    const { data: _postDoc } = await getSB().from('posts').select('youtube_video_id').eq('id',postId).single();
+    const postData = _postDoc;
+    const videoId = postData?.youtube_video_id || null;
+
+    // Apaga do Supabase
+    const { error: _delPostErr } = await getSB().from('posts').delete().eq('id', postId);
+    if (_delPostErr) throw _delPostErr;
+
+    // Se tinha video no YouTube, apaga tambem
+    if (videoId) {
+      try {
+        // Garante token valido
+        if (!ytAccessToken) {
+          const { data: _cfgDoc } = await getSB().from('config').select('data').eq('id','youtube').single();
+          if (_cfgDoc?.data?.refresh_token) {
+            await renovarAccessToken(_cfgDoc.data.refresh_token);
+          }
+        }
+        if (ytAccessToken) {
+          const resp = await fetch(`${YT_WORKER}/delete-video`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accessToken: ytAccessToken, videoId })
+          });
+          const data = await resp.json();
+          if (data.success) {
+            console.log('[YT] Video deletado:', videoId);
+          } else {
+            console.warn('[YT] Falha ao deletar video:', data.error, data.detail || '');
+            // Informa o admin mas nao bloqueia
+            if (data.hint) console.warn('[YT] Dica:', data.hint);
+          }
+        }
+      } catch (ytErr) {
+        console.warn('[YT] Erro ao deletar video do YouTube:', ytErr.message);
+        // Nao bloqueia: post ja foi apagado do Firestore
+      }
+    }
+  } catch (err) { alert('Erro ao excluir: ' + err.message); }
+}
+
+// ..............................................
+// EDITAR POST
+// ..............................................
+let _editPostCache = {};
+
+function abrirEditarPost(postId) {
+  getSB().from('posts').select('*').eq('id',postId).single().then(({data:p,error:_e}) => {
+    if (_e || !p) { alert('Post nao encontrado.'); return; }
+    _editPostCache = { id: postId, ...p };
+    document.getElementById('editPostId').value = postId;
+    document.getElementById('editPostTitulo').value = p.titulo || '';
+    document.getElementById('editPostTexto').value = p.texto || '';
+    document.getElementById('editPostCategoria').value = p.categoria || 'analise';
+    document.getElementById('editPostLink').value = p.link || '';
+    const modal = document.getElementById('modalEditarPost');
+    modal.style.display = 'flex';
+  }).catch(err => alert('Erro: ' + err.message));
+}
+
+function fecharEditarPost() {
+  document.getElementById('modalEditarPost').style.display = 'none';
+  _editPostCache = {};
+}
+
+async function salvarEdicaoPost() {
+  const postId = document.getElementById('editPostId').value;
+  if (!postId) return;
+  const titulo = document.getElementById('editPostTitulo').value.trim();
+  if (!titulo) { mostrarAlerta('alert-edit-post', 'Titulo obrigatorio.', 'error'); return; }
+
+  try {
+    await getSB().from('posts').update({
+      titulo,
+      texto: document.getElementById('editPostTexto').value.trim(),
+      categoria: document.getElementById('editPostCategoria').value,
+      link: document.getElementById('editPostLink').value.trim() || null,
+      editado_em: new Date().toISOString(),
+      editado_por: window._adminNome || 'Admin'
+    }).eq('id', postId);;
+    mostrarAlerta('alert-edit-post', 'Post atualizado!', 'success');
+    setTimeout(() => fecharEditarPost(), 1200);
+  } catch (err) {
+    mostrarAlerta('alert-edit-post', 'Erro: ' + err.message, 'error');
+  }
+}
+
+// Close modal clicking backdrop
+document.getElementById('modalEditarPost')?.addEventListener('click', (e) => {
+  if (e.target.id === 'modalEditarPost') fecharEditarPost();
+});
+
+// ..............................................
+// MsLTIPLOS ARQUIVOS ?" preview list
+// ..............................................
+let arquivosMultiplos = [];
+
+function alternarVisualizacao() {
+  // Navega na mesma aba para o portal do aluno
+  localStorage.setItem('portal-view-mode', 'aluno');
+  window.location.href = 'aluno.html?from=admin';
+}
+
+function inicializarVisualizacao() {
+  // Garante que ao abrir o painel admin a preferencia volte para admin
+  localStorage.setItem('portal-view-mode', 'admin');
+}
+
+document.getElementById('formTradeData').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!temPermissao('planilha')) { alert('Sem permissao para registrar trades.'); return; }
+  const btn = document.getElementById('btnTradeData');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  try {
+    const dia = parseInt(document.getElementById('diaData').value);
+    const mes = parseInt(document.getElementById('mesData').value);
+    const ano = parseInt(document.getElementById('anoData').value);
+    const semana = document.getElementById('semana').value || calcularSemanaMes(dia, mes, ano);
+    const nasOp = document.getElementById('nasOp').checked;
+    const dowOp = document.getElementById('dowOp').checked;
+    const spOp = document.getElementById('spOp').checked;
+    if (!nasOp && !dowOp && !spOp) { mostrarAlerta('alert-trade-data','Marque pelo menos um ativo operado','error'); btn.disabled=false; btn.textContent='Salvar na Planilha'; return; }
+    const erros = [], linhas = [];
+    if (nasOp) {
+      const r = await salvarAtivo(dia, mes, ano, semana, 'NASDAQ', document.getElementById('nasPontos').value||0, document.getElementById('nasTrades').value||0, document.getElementById('nasGains').value||0, document.getElementById('nasStops').value||0, document.getElementById('nasBreak').value||0);
+      if (r.success) linhas.push(`NASDAQ linha ${r.linha}`); else erros.push('NASDAQ: ' + r.error);
+    }
+    if (dowOp) {
+      const r = await salvarAtivo(dia, mes, ano, semana, 'DOW JONES', document.getElementById('dowPontos').value||0, document.getElementById('dowTrades').value||0, document.getElementById('dowGains').value||0, document.getElementById('dowStops').value||0, document.getElementById('dowBreak').value||0);
+      if (r.success) linhas.push(`DOW linha ${r.linha}`); else erros.push('DOW: ' + r.error);
+    }
+    if (spOp) {
+      const r = await salvarAtivo(dia, mes, ano, semana, 'SP500', document.getElementById('spPontos').value||0, document.getElementById('spTrades').value||0, document.getElementById('spGains').value||0, document.getElementById('spStops').value||0, document.getElementById('spBreak').value||0);
+      if (r.success) linhas.push(`SP500 linha ${r.linha}`); else erros.push('SP500: ' + r.error);
+    }
+    if (erros.length) throw new Error(erros.join(' | '));
+    mostrarAlerta('alert-trade-data', `Salvo! (${linhas.join(', ')})`, 'success');
+    ['nasPontos','nasTrades','nasGains','nasStops','nasBreak','dowPontos','dowTrades','dowGains','dowStops','dowBreak','spPontos','spTrades','spGains','spStops','spBreak'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  } catch (error) { mostrarAlerta('alert-trade-data', 'Erro: ' + error.message, 'error'); }
+  btn.disabled = false; btn.textContent = 'Salvar na Planilha';
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro | Dashboard NASDAQ PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-soft: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,.1);
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --blue: #3b82f6;
+  --red: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(59,130,246,0.10), transparent 36%),
+    radial-gradient(circle at bottom right, rgba(34,197,94,0.08), transparent 32%),
+    var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.container {
+  max-width: 480px;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  font-size: 46px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(15,23,42,0.96), rgba(15,23,42,0.92));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+input {
+  width: 100%;
+  background: var(--card-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 15px;
+  font-size: 14px;
+  color: var(--text);
+  transition: all .2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(34,197,94,0.6);
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+}
+
+input[readonly] {
+  opacity: .92;
+  cursor: not-allowed;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #03130a;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-google {
+  background: #ffffff;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-google:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+.alert {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: none;
+}
+
+.alert.success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  color: var(--accent);
+}
+
+.alert.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: var(--red);
+}
+
+.alert.warning,
+.info-box {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+}
+
+.info-box {
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 95px);
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.back-link {
+  text-align: center;
+}
+
+.back-link a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color .2s ease;
+}
+
+.back-link a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  body { padding: 16px; }
+  .card { padding: 24px; }
+  h1 { font-size: 26px; }
+  .divider::before,
+  .divider::after { width: calc(50% - 82px); }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">✨</div>
+    <h1>Criar Conta</h1>
+    <p class="subtitle">Cadastre-se e aguarde aprovação</p>
+  </div>
+
+  <div class="card">
+    <div class="stack">
+      <div id="alert" class="alert"></div>
+      <div id="googleFlowInfo" class="info-box" style="display:none;"></div>
+
+      <button type="button" class="btn btn-google" id="btnGoogleCadastro">
+        <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z"/></svg>
+        Criar conta com Google
+      </button>
+
+      <div class="divider">ou preencha manualmente</div>
+
+      <form id="cadastroForm" class="stack">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" placeholder="João Silva" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="joao@exemplo.com" required>
+        </div>
+
+        <div class="form-group" id="senhaGroup">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+        </div>
+
+        <div class="form-group" id="confirmarSenhaGroup">
+          <label for="confirmarSenha">Confirmar Senha</label>
+          <input type="password" id="confirmarSenha" placeholder="Digite a senha novamente" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnCadastro">Criar Conta</button>
+      </form>
+
+      <div class="info-box">
+        <strong>Importante:</strong><br>
+        Após o cadastro, sua conta será analisada pelo administrador. Você receberá acesso assim que for aprovado.
+      </div>
+
+      <div class="back-link">
+        <a href="login.html">← Voltar para o login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+document.addEventListener('supabase-ready', inicializarCadastro);
+if (window._supabase) inicializarCadastro();
+
+function inicializarCadastro() {
+  const sb = window._supabase;
+  const form = document.getElementById('cadastroForm');
+  const alertBox = document.getElementById('alert');
+  const btnCadastro = document.getElementById('btnCadastro');
+  const btnGoogleCadastro = document.getElementById('btnGoogleCadastro');
+  const infoBox = document.getElementById('googleFlowInfo');
+  const nomeInput = document.getElementById('nome');
+  const emailInput = document.getElementById('email');
+  const senhaInput = document.getElementById('senha');
+  const confirmarSenhaInput = document.getElementById('confirmarSenha');
+  const senhaGroup = document.getElementById('senhaGroup');
+  const confirmarSenhaGroup = document.getElementById('confirmarSenhaGroup');
+  const googleFlow = new URLSearchParams(window.location.search).get('google') === '1';
+  let sessaoAtual = null;
+
+  if (!sb || !form || form.dataset.ready === '1') return;
+  form.dataset.ready = '1';
+
+  function mostrarAlerta(mensagem, tipo) {
+    alertBox.textContent = mensagem;
+    alertBox.className = `alert ${tipo}`;
+    alertBox.style.display = 'block';
+
+    if (tipo === 'success') {
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 2200);
+    }
+  }
+
+  btnGoogleCadastro.addEventListener('click', async () => {
+    mostrarAlerta('🔄 Redirecionando para o Google...', 'warning');
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname + '?google=1'
+      }
+    });
+    if (error) {
+      mostrarAlerta('❌ Erro ao iniciar cadastro com Google: ' + error.message, 'error');
+    }
+  });
+
+  sb.auth.getSession().then(async ({ data: { session } }) => {
+    sessaoAtual = session || null;
+
+    if (!session?.user) {
+      if (googleFlow) {
+        mostrarAlerta('❌ Sua sessão com Google expirou. Entre com Google novamente.', 'error');
+      }
+      return;
+    }
+
+    try {
+      const { data: userData } = await sb.from('users').select('role, aprovado').eq('id', session.user.id).single();
+
+      if (userData?.role === 'admin') {
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      if (userData?.aprovado === true) {
+        window.location.href = 'aluno.html';
+        return;
+      }
+
+      if (googleFlow) {
+        nomeInput.value = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
+        emailInput.value = session.user.email || '';
+        emailInput.readOnly = true;
+        senhaGroup.style.display = 'none';
+        confirmarSenhaGroup.style.display = 'none';
+        senhaInput.required = false;
+        confirmarSenhaInput.required = false;
+        btnGoogleCadastro.style.display = 'none';
+        btnCadastro.textContent = 'Completar Cadastro com Google';
+        infoBox.style.display = 'block';
+        infoBox.innerHTML = '<strong>Conta Google conectada</strong><br>Complete seus dados para finalizar o cadastro. Depois disso, sua conta ficará aguardando a aprovação do administrador.';
+      }
+    } catch (error) {
+      console.error('Erro ao validar sessão no cadastro:', error);
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nome = nomeInput.value.trim();
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value;
+    const confirmarSenha = confirmarSenhaInput.value;
+
+    if (!nome) {
+      mostrarAlerta('❌ Informe seu nome completo.', 'error');
+      return;
+    }
+
+    if (!googleFlow && senha !== confirmarSenha) {
+      mostrarAlerta('❌ As senhas não coincidem.', 'error');
+      return;
+    }
+
+    if (!googleFlow && senha.length < 6) {
+      mostrarAlerta('❌ A senha deve ter no mínimo 6 caracteres.', 'error');
+      return;
+    }
+
+    btnCadastro.disabled = true;
+    btnCadastro.textContent = googleFlow ? 'Finalizando cadastro...' : 'Criando conta...';
+
+    try {
+      let user = sessaoAtual?.user || null;
+
+      if (googleFlow) {
+        if (!user?.id) throw new Error('Sessão do Google não encontrada. Entre com Google novamente.');
+
+        const { error: updateProfileError } = await sb.auth.updateUser({
+          data: { full_name: nome }
+        });
+        if (updateProfileError) throw updateProfileError;
+      } else {
+        const { data, error } = await sb.auth.signUp({
+          email,
+          password: senha,
+          options: {
+            data: { full_name: nome }
+          }
+        });
+
+        if (error) throw error;
+        user = data.user;
+      }
+
+      if (!user?.id) throw new Error('Não foi possível criar o usuário.');
+
+      const { error: upsertError } = await sb.from('users').upsert({
+        id: user.id,
+        nome,
+        email,
+        role: 'aluno',
+        aprovado: false,
+        created_at: new Date().toISOString()
+      });
+
+      // Quando existe trigger em auth.users -> public.users, a linha já nasce no banco.
+      // Nesse cenário, um bloqueio de RLS/permission no upsert do front não deve quebrar o cadastro.
+      if (upsertError) {
+        // Com trigger ativo, a linha já é criada no banco.
+        // Evita travar o cadastro por erro de RLS/permissão/ambiente.
+        console.warn('Upsert users ignorado:', upsertError);
+      }
+
+      await sb.auth.signOut();
+      mostrarAlerta(
+        googleFlow
+          ? '✅ Cadastro concluído! Sua conta está aguardando aprovação do administrador.'
+          : '✅ Conta criada com sucesso! Aguarde aprovação do administrador.',
+        'success'
+      );
+    } catch (error) {
+      console.error('Erro no cadastro:', error);
+
+      let mensagem = '❌ Erro ao criar conta. ';
+      const msg = error?.message || '';
+
+      if (msg.includes('User already registered')) {
+        mensagem += 'Este e-mail já está cadastrado.';
+      } else if (msg.includes('Invalid email')) {
+        mensagem += 'E-mail inválido.';
+      } else if (msg.includes('Password should be at least')) {
+        mensagem += 'A senha é muito curta.';
+      } else {
+        mensagem += msg;
+      }
+
+      mostrarAlerta(mensagem, 'error');
+      btnCadastro.disabled = false;
+      btnCadastro.textContent = googleFlow ? 'Completar Cadastro com Google' : 'Criar Conta';
+    }
+  });
+}
+</script>
+
+</body>
+</html>

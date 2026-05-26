@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Login | Dashboard NASDAQ PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* ══ TEMA COMPARTILHADO ══ */
+:root {
+  --bg: #020617; --card: #0f172a; --card-hover: #161b2e;
+  --border: rgba(255,255,255,.1); --border-bright: rgba(99,102,241,0.4);
+  --text: #e5e7eb; --text-dim: #cbd5e1; --text-muted: #94a3b8;
+  --accent: #22c55e; --blue: #3b82f6; --blue-bright: #818cf8; --red: #ef4444;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3); --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+}
+body.light-theme {
+  --bg: #f1f5f9; --card: #ffffff; --card-hover: #f8fafc;
+  --border: rgba(99,102,241,0.18); --border-bright: rgba(99,102,241,0.45);
+  --text: #0f172a; --text-dim: #334155; --text-muted: #64748b;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08); --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+}
+body { background: var(--bg); color: var(--text); transition: background-color .3s, color .3s; }
+.theme-toggle-btn {
+  background: var(--card); border: 1px solid var(--border); color: var(--text);
+  width: 34px; height: 34px; border-radius: 9px; font-size: 16px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s;
+}
+.theme-toggle-btn:hover { border-color: var(--blue-bright); transform: scale(1.08); }
+#themeIcon { display: inline-block; transition: transform .3s; }
+/* Light theme overrides */
+body.light-theme header { background: #ffffff !important; border-color: rgba(99,102,241,0.15) !important; }
+body.light-theme .card, body.light-theme .modal-box { background: #ffffff !important; border-color: rgba(99,102,241,0.15) !important; }
+body.light-theme .post-card { background: #ffffff; border-color: rgba(99,102,241,0.12); }
+body.light-theme .quick-card { background: #ffffff; border-color: rgba(99,102,241,0.12); }
+body.light-theme .comentario-item { background: #f8fafc; border-color: rgba(99,102,241,0.1); }
+body.light-theme .resposta-item { background: #f1f5f9; }
+body.light-theme .filter-btn { background: #f1f5f9; border-color: rgba(99,102,241,0.15); color: #334155; }
+body.light-theme .filter-btn.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+body.light-theme .filter-btn:hover { border-color: #3b82f6; }
+body.light-theme .btn-logout { background: #f1f5f9; color: #0f172a; border-color: rgba(99,102,241,0.2); }
+body.light-theme .btn-secondary { background: #f1f5f9; color: #334155; border-color: rgba(99,102,241,0.2); }
+body.light-theme .btn-secondary:hover { background: #e2e8f0; border-color: #3b82f6; }
+body.light-theme .welcome-banner { background: linear-gradient(135deg,rgba(59,130,246,0.07),rgba(34,197,94,0.05)); }
+body.light-theme .post-text, body.light-theme .post-meta { color: #475569; }
+body.light-theme .post-file-box { background: rgba(99,102,241,0.04); border-color: rgba(99,102,241,0.15); }
+body.light-theme textarea, body.light-theme .comentario-form textarea, body.light-theme .reply-form textarea {
+  background: #f8fafc !important; border-color: rgba(99,102,241,0.2) !important; color: #0f172a !important;
+}
+body.light-theme input { background: #f8fafc !important; color: #0f172a !important; border-color: rgba(99,102,241,0.2) !important; }
+body.light-theme .section-header h2, body.light-theme h1, body.light-theme h2, body.light-theme h3 { color: #0f172a; }
+body.light-theme .tab { color: #64748b; }
+body.light-theme .tab.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+body.light-theme table th { background: #f1f5f9; color: #64748b; }
+body.light-theme table td { border-color: rgba(99,102,241,0.1); color: #0f172a; }
+body.light-theme .post-item { background: #f8fafc; border-color: rgba(99,102,241,0.12); }
+body.light-theme .upload-area { background: #f8fafc; border-color: rgba(99,102,241,0.2); }
+body.light-theme select { background: #f8fafc; color: #0f172a; border-color: rgba(99,102,241,0.2); }
+body.light-theme select option { background: #ffffff; color: #0f172a; }
+body { background: var(--bg); color: var(--text); transition: background-color 0.3s, color 0.3s; }
+body.light-theme { background: var(--bg); color: var(--text); }
+.theme-toggle-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  font-size: 17px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover { border-color: var(--blue-bright); background: var(--card-hover); transform: scale(1.08); }
+#themeIcon { display: inline-block; }
+body.light-theme 
+body.light-theme input,
+body.light-theme textarea { background: #f8fafc !important; border-color: rgba(99,102,241,0.2) !important; color: #0f172a !important; }
+body.light-theme input:focus,
+body.light-theme textarea:focus { background: #fff !important; border-color: #6366f1 !important; }
+body.light-theme .login-header h1 { color: #0f172a; }
+body.light-theme .login-header p { color: #64748b; }
+body.light-theme .login-link { color: #6366f1; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 24px;
+}
+.container { max-width: 420px; width: 100%; }
+.header { text-align: center; margin-bottom: 32px; }
+.logo { font-size: 48px; margin-bottom: 12px; }
+h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.subtitle { font-size: 14px; color: var(--text-muted); }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+.form-group { margin-bottom: 20px; }
+label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text);
+  transition: all .2s ease;
+}
+input:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+input::placeholder { color: var(--text-muted); }
+.btn {
+  width: 100%;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+  margin-top: 8px;
+}
+.btn:hover { background: #16a34a; transform: scale(1.02); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.alert { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; }
+.alert.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
+.alert.warning { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; }
+.links { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; }
+.links a { color: var(--text-muted); text-decoration: none; transition: color .2s; }
+.links a:hover { color: var(--accent); }
+.divider { text-align: center; margin: 24px 0; color: var(--text-muted); font-size: 13px; }
+.back-link { text-align: center; margin-top: 20px; }
+.back-link a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+.back-link a:hover { color: var(--accent); }
+
+/* ── SOCIAL BAR ── */
+.social-bar {
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .25s;
+  border: 1px solid transparent;
+}
+.social-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+}
+.social-btn.instagram {
+  background: rgba(193,53,132,0.12);
+  border-color: rgba(193,53,132,0.4);
+  color: #f472b6;
+}
+.social-btn.instagram:hover {
+  background: rgba(193,53,132,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(193,53,132,0.25);
+}
+.social-btn.youtube {
+  background: rgba(255,0,0,0.1);
+  border-color: rgba(255,0,0,0.35);
+  color: #f87171;
+}
+.social-btn.youtube:hover {
+  background: rgba(255,0,0,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,0,0,0.2);
+}
+.social-btn.whatsapp {
+  background: rgba(37,211,102,0.1);
+  border-color: rgba(37,211,102,0.35);
+  color: #4ade80;
+}
+.social-btn.whatsapp:hover {
+  background: rgba(37,211,102,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37,211,102,0.2);
+}
+
+/* ── MESAS INDICADAS ── */
+.mesas-section {
+  max-width: 420px;
+  width: 100%;
+}
+.mesas-toggle {
+  width: 100%;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 12px;
+  padding: 14px 20px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all .25s;
+  font-family: inherit;
+}
+.mesas-toggle:hover {
+  background: rgba(99,102,241,0.15);
+  border-color: rgba(99,102,241,0.5);
+}
+.mesas-toggle .arrow {
+  transition: transform .3s;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.mesas-toggle.open .arrow { transform: rotate(180deg); }
+
+.mesas-panel {
+  display: none;
+  margin-top: 10px;
+  background: var(--card);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: slideDown .25s ease;
+}
+@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+.mesas-panel.open { display: block; }
+
+.mesa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background .2s;
+}
+.mesa-item:last-child { border-bottom: none; }
+.mesa-item:hover { background: rgba(99,102,241,0.06); }
+.mesa-info { display: flex; align-items: center; gap: 12px; }
+.mesa-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.mesa-logo.tp { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; font-size: 13px; letter-spacing: -0.5px; }
+.mesa-logo.apex { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; font-size: 13px; }
+.mesa-text {}
+.mesa-name { font-size: 14px; font-weight: 800; color: var(--text); }
+.mesa-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.mesa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all .2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mesa-link:hover { transform: scale(1.05); box-shadow: 0 4px 14px rgba(99,102,241,0.4); }
+
+@media (max-width: 480px) {
+  .container { max-width: 100%; }
+  .mesas-section { max-width: 100%; }
+  .social-bar { max-width: 100%; }
+  .card { padding: 24px; }
+  h1 { font-size: 24px; }
+}
+</style>
+<script>
+/* ── NasTheme inline ── */
+(function(){
+  const KEY='dashboard-tema';
+  function aplicar(t){
+    if(t==='light'){document.documentElement.classList.add('light-theme');if(document.body)document.body.classList.add('light-theme');}
+    else{document.documentElement.classList.remove('light-theme');if(document.body)document.body.classList.remove('light-theme');}
+    var ic=document.getElementById('themeIcon');if(ic)ic.textContent=t==='dark'?'🌙':'☀️';
+  }
+  function get(){return localStorage.getItem(KEY)||'dark';}
+  aplicar(get());
+  window.NasTheme={
+    carregar:function(){aplicar(get());},
+    toggle:function(){
+      var n=get()==='dark'?'light':'dark';
+      localStorage.setItem(KEY,n);aplicar(n);
+      var ic=document.getElementById('themeIcon');
+      if(ic){ic.style.transform='rotate(360deg) scale(0)';setTimeout(function(){ic.textContent=n==='dark'?'🌙':'☀️';ic.style.transform='rotate(0deg) scale(1)';},150);}
+    },
+    getTema:get
+  };
+  document.addEventListener('DOMContentLoaded',function(){aplicar(get());});
+})();
+</script>
+</head>
+<body>
+<button onclick="NasTheme.toggle()" title="Alternar tema" style="position:fixed;top:16px;right:16px;z-index:9999;background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:all .2s;"><span id="themeIcon">🌙</span></button>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">🔐</div>
+    <h1>Entrar</h1>
+    <p class="subtitle">Acesse sua área exclusiva</p>
+  </div>
+
+  <div class="card">
+    <div id="alert" class="alert"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" placeholder="••••••••" required>
+      </div>
+
+      <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+        <input type="checkbox" id="manterConectado" checked style="width:auto;cursor:pointer;">
+        <label for="manterConectado" style="margin:0;cursor:pointer;font-size:13px;color:var(--text-muted);">
+          Manter conectado
+        </label>
+      </div>
+
+      <button type="submit" class="btn" id="btnLogin">Entrar</button>
+    </form>
+
+    <div class="divider">ou</div>
+
+    <button type="button" class="btn btn-google" id="btnGoogle">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px;vertical-align:middle"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z"/></svg>
+      Entrar com Google
+    </button>
+
+    <div class="links">
+      <a href="cadastro.html">Criar conta</a>
+      <a href="#" id="esqueceuSenha">Esqueceu a senha?</a>
+    </div>
+
+    <div class="back-link">
+      <a href="../">← Voltar ao Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<!-- REDES SOCIAIS -->
+<div class="social-bar">
+  <a href="https://www.instagram.com/joaodibtrader?igsh=dzgxMmJsOWtjaWJh" target="_blank" rel="noopener" class="social-btn instagram" title="Instagram">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+  <a href="https://m.youtube.com/@joaodibtrader/" target="_blank" rel="noopener" class="social-btn youtube" title="YouTube">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+  </a>
+  <a href="https://chat.whatsapp.com/SEU_LINK_AQUI" target="_blank" rel="noopener" class="social-btn whatsapp" title="Grupo Gratuito WhatsApp">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<!-- MESAS INDICADAS -->
+<div class="mesas-section">
+  <button class="mesas-toggle" id="mesasToggle" onclick="toggleMesas()">
+    <span>🏆 Mesas Indicadas — Prop Firms</span>
+    <span class="arrow">▼</span>
+  </button>
+  <div class="mesas-panel" id="mesasPanel">
+    <div class="mesa-item">
+      <div class="mesa-info">
+        <div class="mesa-logo tp">TP</div>
+        <div class="mesa-text">
+          <div class="mesa-name">TakeProfit Trader</div>
+          <div class="mesa-desc">Cupom: DIB</div>
+        </div>
+      </div>
+      <a href="https://takeprofittrader.com/?referralCode=DIB" target="_blank" rel="noopener" class="mesa-link">
+        Acessar →
+      </a>
+    </div>
+    <div class="mesa-item">
+      <div class="mesa-info">
+        <div class="mesa-logo apex">AX</div>
+        <div class="mesa-text">
+          <div class="mesa-name">Apex Trader Funding</div>
+          <div class="mesa-desc">Cupom: DIB</div>
+        </div>
+      </div>
+      <a href="https://apextraderfunding.com/member/aff/go/joaodib?c=ZINFQCUB" target="_blank" rel="noopener" class="mesa-link">
+        Acessar →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+function toggleMesas() {
+  const btn = document.getElementById('mesasToggle');
+  const panel = document.getElementById('mesasPanel');
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+}
+
+// Aguarda Supabase estar pronto
+document.addEventListener('supabase-ready', inicializar);
+// fallback se já carregou
+if (window._supabase) inicializar();
+
+function inicializar() {
+  const sb = window._supabase;
+
+  // ── Verifica sessão ativa ──
+  document.body.style.opacity = '0.5';
+  document.body.style.pointerEvents = 'none';
+
+  sb.auth.getSession().then(async ({ data: { session } }) => {
+    if (session) {
+      const origem = window.location.hash.includes('access_token') ? 'google' : 'login';
+      await avaliarSessao(session, origem);
+      if (origem === 'google' && window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+      document.body.style.opacity = '1';
+      document.body.style.pointerEvents = 'auto';
+      return;
+
+      const user = session.user;
+      try {
+        const { data: userData } = await sb.from('users').select('role, aprovado').eq('id', user.id).single();
+        if (userData) {
+          if (userData.role === 'admin') { window.location.href = 'admin.html'; return; }
+          if (userData.aprovado === true) { window.location.href = 'aluno.html'; return; }
+        }
+        await sb.auth.signOut();
+      } catch (err) { console.error('Erro ao verificar usuário:', err); }
+    }
+    document.body.style.opacity = '1';
+    document.body.style.pointerEvents = 'auto';
+  });
+
+  const form     = document.getElementById('loginForm');
+  const alertBox = document.getElementById('alert');
+  const btnLogin = document.getElementById('btnLogin');
+
+  function mostrarAlerta(mensagem, tipo) {
+    alertBox.textContent = mensagem;
+    alertBox.className = `alert ${tipo}`;
+    alertBox.style.display = 'block';
+  }
+
+  async function avaliarSessao(session, origem) {
+    const user = session?.user;
+    if (!user) return false;
+
+    try {
+      let { data: userData, error } = await sb.from('users').select('role, aprovado').eq('id', user.id).single();
+      if (error && error.code !== 'PGRST116') throw error;
+
+      if (!userData) {
+        const { error: upsertError } = await sb.from('users').upsert({
+          id: user.id,
+          nome: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Aluno',
+          email: user.email,
+          role: 'aluno',
+          aprovado: false,
+          created_at: new Date().toISOString()
+        });
+        if (upsertError) throw upsertError;
+        userData = { role: 'aluno', aprovado: false };
+      }
+
+      if (userData.role === 'admin') {
+        window.location.href = 'admin.html';
+        return true;
+      }
+
+      if (userData.aprovado === true) {
+        window.location.href = 'aluno.html';
+        return true;
+      }
+
+      if (origem === 'google') {
+        window.location.href = 'cadastro.html?google=1';
+        return true;
+      }
+
+      mostrarAlerta(
+        origem === 'google'
+          ? '⏳ Login com Google concluído. Sua conta ainda está aguardando aprovação do administrador.'
+          : '⏳ Sua conta ainda está aguardando aprovação do administrador.',
+        'warning'
+      );
+      await sb.auth.signOut();
+      return true;
+    } catch (err) {
+      console.error('Erro ao verificar usuário:', err);
+      mostrarAlerta('❌ Não foi possível validar sua conta agora. Tente novamente.', 'error');
+      try { await sb.auth.signOut(); } catch (_) {}
+      return true;
+    }
+  }
+
+  // ── Login com email + senha ──
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value;
+    btnLogin.disabled = true;
+    btnLogin.textContent = 'Entrando...';
+    try {
+      const { data, error } = await sb.auth.signInWithPassword({ email, password: senha });
+      if (error) throw error;
+
+      await avaliarSessao(data.session, 'login');
+      btnLogin.disabled = false;
+      btnLogin.textContent = 'Entrar';
+      return;
+
+      const user = data.user;
+      // Garante row em users (cria se não existir via upsert)
+      const { data: userData } = await sb.from('users').select('role, aprovado').eq('id', user.id).single();
+
+      if (!userData) {
+        // Primeiro acesso — trigger já cria a row, mas garante aprovado=false
+        await sb.from('users').upsert({
+          id: user.id,
+          nome: user.user_metadata?.full_name || email.split('@')[0],
+          email: user.email,
+          role: 'aluno',
+          aprovado: false,
+          created_at: new Date().toISOString()
+        });
+        mostrarAlerta('⏳ Conta criada. Aguarde aprovação do administrador.', 'warning');
+        await sb.auth.signOut();
+        btnLogin.disabled = false; btnLogin.textContent = 'Entrar'; return;
+      }
+
+      if (userData.role === 'admin') { window.location.href = 'admin.html'; return; }
+      if (userData.aprovado !== true) {
+        mostrarAlerta('⏳ Sua conta ainda está aguardando aprovação do administrador.', 'warning');
+        await sb.auth.signOut();
+        btnLogin.disabled = false; btnLogin.textContent = 'Entrar'; return;
+      }
+      window.location.href = 'aluno.html';
+
+    } catch (error) {
+      let mensagem = '❌ ';
+      const msg = error.message || '';
+      if (msg.includes('Invalid login credentials') || msg.includes('invalid_credentials')) {
+        mensagem += 'E-mail ou senha incorretos.';
+      } else if (msg.includes('Email not confirmed')) {
+        mensagem += 'Confirme seu e-mail antes de entrar.';
+      } else if (msg.includes('Too many requests')) {
+        mensagem += 'Muitas tentativas. Tente novamente mais tarde.';
+      } else {
+        mensagem += msg;
+      }
+      mostrarAlerta(mensagem, 'error');
+      btnLogin.disabled = false; btnLogin.textContent = 'Entrar';
+    }
+  });
+
+  // ── Login com Google ──
+  const btnGoogle = document.getElementById('btnGoogle');
+  if (btnGoogle) {
+    btnGoogle.addEventListener('click', async () => {
+      mostrarAlerta('🔄 Redirecionando para o Google...', 'warning');
+      const { error } = await sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + window.location.pathname }
+      });
+      if (error) mostrarAlerta('❌ Erro ao entrar com Google: ' + error.message, 'error');
+    });
+  }
+
+  // ── Esqueceu senha ──
+  document.getElementById('esqueceuSenha').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email) { mostrarAlerta('❌ Digite seu e-mail primeiro', 'error'); return; }
+    try {
+      const { error } = await sb.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/portal/reset-password.html'
+      });
+      if (error) throw error;
+      mostrarAlerta('✅ E-mail de recuperação enviado! Verifique sua caixa de entrada.', 'warning');
+    } catch (error) {
+      mostrarAlerta('❌ Erro ao enviar e-mail de recuperação: ' + error.message, 'error');
+    }
+  });
+}
+</script>
+</body>
+</html>

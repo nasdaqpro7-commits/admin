@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -1100,8 +1100,8 @@ function renderAdminCard(a) {
   const av = avatarHtml(a.nome || a.email || '?', a.foto_url || null, 42);
   const nome = a.nome || '-';
   const email = a.email || '-';
-  const isSuperA = !a.permissaoes; // null/undefined = superadmin (acesso total)
-  const perms = a.permissaoes || [];
+  const isSuperA = !a.permissoes; // null/undefined = superadmin (acesso total)
+  const perms = a.permissoes || [];
 
   // Tags de permissaoes
   const permTags = isSuperA ?
@@ -1112,7 +1112,7 @@ function renderAdminCard(a) {
       }).join('');
 
   const editBtn = (window._isSuperAdmin && a.id !== window._adminUid) ?
-    `<button onclick="abrirModalpermissaoes('${a.id}','${(a.nome||a.email||'').replace(/'/g,"\\'")}',${JSON.stringify(a.permissaoes||null).replace(/"/g,"'")})"
+    `<button onclick="abrirModalpermissaoes('${a.id}','${(a.nome||a.email||'').replace(/'/g,"\\'")}',${JSON.stringify(a.permissoes||null).replace(/"/g,"'")})"
          style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s;"
          onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.1)'"> Editar</button>`
     : (a.id === window._adminUid ? '<span style="font-size:11px;color:var(--text-muted);flex-shrink:0;"> Voce</span>' : '');
@@ -1149,9 +1149,9 @@ async function promoverAdmin() {
   try {
     const { data: updatedUser, error } = await getSB()
       .from('users')
-      .update({ role:'admin', permissaoes:perms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
+      .update({ role:'admin', permissoes:perms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
       .eq('id', uid)
-      .select('id, role, permissaoes')
+      .select('id, role, permissoes')
       .single();
 
     if (error) throw error;
@@ -1208,9 +1208,9 @@ async function salvarpermissaoes() {
   try {
     const { data: updatedUser, error } = await getSB()
       .from('users')
-      .update({ permissaoes:novasPerms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
+      .update({ permissoes:novasPerms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
       .eq('id', _editingAdminId)
-      .select('id, role, permissaoes')
+      .select('id, role, permissoes')
       .single();
 
     if (error) throw error;
@@ -1230,7 +1230,7 @@ async function rebaixarAdmin() {
   try {
     const { data: updatedUser, error } = await getSB()
       .from('users')
-      .update({ role:'aluno', permissaoes:null, promoted_by:null, promoted_at:null })
+      .update({ role:'aluno', permissoes:null, promoted_by:null, promoted_at:null })
       .eq('id', _editingAdminId)
       .select('id, role')
       .single();
@@ -1267,7 +1267,7 @@ getSB().auth.getSession().then(async ({ data: { session } }) => {
     window._adminFotoUrl = adminData.foto_url || user.user_metadata?.avatar_url || null;
 
     // Permissoes: null/undefined = superadmin (acesso total); array = admin com restricoes
-    const perms = adminData.permissaoes;
+    const perms = adminData.permissoes;
     window._isSuperAdmin = !perms || !Array.isArray(perms);
     window._adminPerms = window._isSuperAdmin ? null : perms;
 

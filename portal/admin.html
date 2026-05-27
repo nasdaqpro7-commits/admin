@@ -187,7 +187,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
   <div class="user-info">
     <a href="../" style="display:inline-block;background:rgba(255,255,255,0.1);color:var(--text);border:1px solid var(--border);padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;margin-right:12px;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Dashboard</a>
     <button id="btnConectarYT" onclick="autenticarYouTube()" style="display:none;background:#ff0000;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;">Conectar YouTube</button>
-    <button id="btnVisualizacao" onclick="alternarVisualizacao()" title="Alternar visualizacao" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;" onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.12)'">Ver como Aluno</button>
+    <button id="btnVisualizacao" onclick="alternarVisualizacao()" title="Alternar visualização" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);color:var(--blue);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;" onmouseover="this.style.background='rgba(99,102,241,0.2)'" onmouseout="this.style.background='rgba(99,102,241,0.12)'">Ver como Aluno</button>
     <button class="theme-toggle-btn" onclick="NasTheme.toggle()" title="Alternar tema"><span id="themeIcon">Tema</span></button>
     <div id="adminAvatarHeader" onclick="abrirPerfilAdmin()" title="Editar perfil" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22c55e);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;cursor:pointer;overflow:hidden;border:2px solid transparent;transition:all .2s;flex-shrink:0;">
       <span id="adminAvatarLetra">A</span>
@@ -212,22 +212,22 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
       <div id="alert-post" class="alert"></div>
       <form id="formPost">
         <div class="form-group">
-          <label>Titulo</label>
-          <input type="text" id="postTitulo" placeholder="Ex: Analise semanal do NASDAQ" required>
+          <label>Título</label>
+          <input type="text" id="postTitulo" placeholder="Ex: Análise semanal do NASDAQ" required>
         </div>
         <div class="form-group">
-          <label>Descricao (opcional)</label>
-          <textarea id="postTexto" placeholder="Escreva uma descricao para o post..."></textarea>
+          <label>Descrição (opcional)</label>
+          <textarea id="postTexto" placeholder="Escreva uma descrição para o post..."></textarea>
         </div>
         <div class="form-group">
           <label>Categoria</label>
           <select id="postCategoria">
             <option value="sala-ao-vivo">Sala ao Vivo</option>
             <option value="materiais">Materiais</option>
-            <option value="analise">Analise</option>
+            <option value="analise">Análise</option>
             <option value="tutorial">Tutorial</option>
-            <option value="noticia">Noticia</option>
-            <option value="link">Link Util</option>
+            <option value="noticia">Notícia</option>
+            <option value="link">Link Útil</option>
           </select>
         </div>
         <div class="form-group">
@@ -235,12 +235,12 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
           <input type="url" id="postLink" placeholder="https://exemplo.com">
         </div>
         <div class="form-group">
-          <label>Arquivo/Midia (opcional)</label>
+          <label>Arquivo/Mídia (opcional)</label>
           <div class="upload-area" id="uploadAreaUniversal">
             <input type="file" id="postArquivo" accept="*" style="display:none">
             <div id="uploadPlaceholderUniversal">
               <span style="font-size:64px">+</span>
-              <p><strong>Arraste arquivos aqui</strong> (multiplos permitidos)<br>ou clique para selecionar</p>
+              <p><strong>Arraste arquivos aqui</strong> (múltiplos permitidos)<br>ou clique para selecionar</p>
             </div>
             <div id="uploadPreviewUniversal" style="display:none;">
               <div id="previewContent"></div>
@@ -329,15 +329,15 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
   <div id="planilha-section" class="section">
     <div class="card">
       <h2>Registrar Trade do Dia</h2>
-      <p style="color:var(--text-muted);margin-bottom:16px;">Preencha os dados e a planilha sera atualizada automaticamente.</p>
+      <p style="color:var(--text-muted);margin-bottom:16px;">Preencha os dados e a planilha será atualizada automaticamente.</p>
       <div id="alert-trade-data" class="alert"></div>
       <form id="formTradeData">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
           <div class="form-group"><label>Dia</label><input type="number" id="diaData" min="1" max="31" required placeholder="12"></div>
           <div class="form-group">
-            <label>Mes</label>
+            <label>Mês</label>
             <select id="mesData" required>
-              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Marco</option>
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
               <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
               <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
               <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
@@ -409,9 +409,9 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
           <div class="form-group"><label>Dia</label><input type="number" id="diaDoTrade" min="1" max="31" required placeholder="12"></div>
           <div class="form-group">
-            <label>Mes</label>
+            <label>Mês</label>
             <select id="mesDoTrade" required>
-              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Marco</option>
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
               <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
               <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
               <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
@@ -426,7 +426,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
             <div id="uploadPlaceholderTrade">
               <span style="font-size:48px"></span>
               <p><strong>Arraste a foto do trade aqui</strong><br>ou clique para selecionar</p>
-              <small style="color:var(--text-muted)">JPG, PNG ate 10MB</small>
+              <small style="color:var(--text-muted)">JPG, PNG até 10MB</small>
             </div>
             <div id="uploadPreviewTrade" style="display:none">
               <img id="previewImgTrade" src="" alt="Preview" style="max-width:100%;max-height:300px;border-radius:8px;margin-bottom:12px;">
@@ -459,7 +459,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
       </div>
       <div class="card" style="padding:16px 20px;text-align:center;">
         <div style="font-size:28px;font-weight:900;color:#f97316;" id="stat-admins-pendentes">-</div>
-        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Alunos aprovados (elegiveis)</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Alunos aprovados (elegíveis)</div>
       </div>
     </div>
 
@@ -468,7 +468,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
       <!-- Col esquerda: Promover aluno a admin -->
       <div class="card">
         <h2 style="margin-bottom:4px;">Promover Aluno a Admin</h2>
-        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Selecione um aluno aprovado e defina suas permissoes.</p>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Selecione um aluno aprovado e defina suas permissões.</p>
         <div id="alert-admins" class="alert"></div>
 
         <div class="form-group">
@@ -479,13 +479,13 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
         </div>
 
         <div style="margin-bottom:16px;">
-          <label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:10px;">Permissoes</label>
+          <label style="font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:10px;">Permissões</label>
           <div style="display:flex;flex-direction:column;gap:8px;" id="permissaoesCheckboxes">
 
             <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
               <input type="checkbox" id="perm_posts" value="posts" style="width:16px;height:16px;accent-color:var(--blue);">
               <div>
-                <div style="font-size:13px;font-weight:700;"> Publicacoes</div>
+                <div style="font-size:13px;font-weight:700;"> Publicações</div>
                 <div style="font-size:11px;color:var(--text-muted);">Criar e excluir posts</div>
               </div>
             </label>
@@ -493,8 +493,8 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
             <label class="perm-row" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(99,102,241,0.04);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='rgba(99,102,241,0.04)'">
               <input type="checkbox" id="perm_comentarios" value="comentarios" style="width:16px;height:16px;accent-color:var(--blue);">
               <div>
-                <div style="font-size:13px;font-weight:700;"> Comentarios</div>
-                <div style="font-size:11px;color:var(--text-muted);">Ver, responder e excluir Comentarios</div>
+                <div style="font-size:13px;font-weight:700;"> Comentários</div>
+                <div style="font-size:11px;color:var(--text-muted);">Ver, responder e excluir comentários</div>
               </div>
             </label>
 
@@ -518,7 +518,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
               <input type="checkbox" id="perm_youtube" value="youtube" style="width:16px;height:16px;accent-color:var(--blue);">
               <div>
                 <div style="font-size:13px;font-weight:700;">YouTube</div>
-                <div style="font-size:11px;color:var(--text-muted);">Fazer upload de Videos diretamente no YouTube (OAuth). Sem isso, ainda pode postar links de Videos externos.</div>
+                <div style="font-size:11px;color:var(--text-muted);">Fazer upload de vídeos diretamente no YouTube (OAuth). Sem isso, ainda pode postar links de vídeos externos.</div>
               </div>
             </label>
 
@@ -545,7 +545,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
     <div id="modalEditarpermissaoes" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;align-items:center;justify-content:center;">
       <div style="background:var(--card-bg,#0f172a);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:440px;position:relative;margin:16px;">
         <button onclick="fecharModalpermissaoes()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-muted);font-size:22px;cursor:pointer;"></button>
-        <h3 style="font-size:17px;font-weight:800;margin-bottom:6px;">Editar permissoes</h3>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:6px;">Editar permissões</h3>
         <p id="editPermNome" style="font-size:13px;color:var(--text-muted);margin-bottom:18px;"></p>
         <div style="display:flex;flex-direction:column;gap:8px;" id="editPermCheckboxes"></div>
         <div style="display:flex;gap:10px;margin-top:20px;">
@@ -561,16 +561,16 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
   <div id="modalEditarPost" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1500;align-items:center;justify-content:center;padding:16px;">
     <div style="background:var(--card-bg,#0f172a);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative;">
       <button onclick="fecharEditarPost()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-muted);font-size:24px;cursor:pointer;line-height:1;"></button>
-      <h3 style="font-size:18px;font-weight:800;margin-bottom:20px;"> Editar Publicao</h3>
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:20px;">Editar Publicação</h3>
       <div id="alert-edit-post" class="alert"></div>
       <input type="hidden" id="editPostId">
       <div class="form-group">
-        <label>Titulo</label>
-        <input type="text" id="editPostTitulo" placeholder="Titulo do post" required style="width:100%;">
+        <label>Título</label>
+        <input type="text" id="editPostTitulo" placeholder="Título do post" required style="width:100%;">
       </div>
       <div class="form-group">
-        <label>Descricao (opcional)</label>
-        <textarea id="editPostTexto" placeholder="Descricao do post..." style="width:100%;min-height:80px;"></textarea>
+        <label>Descrição (opcional)</label>
+        <textarea id="editPostTexto" placeholder="Descrição do post..." style="width:100%;min-height:80px;"></textarea>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="form-group">
@@ -578,10 +578,10 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
           <select id="editPostCategoria" style="width:100%;">
             <option value="sala-ao-vivo"> Sala ao Vivo</option>
             <option value="materiais"> Materiais</option>
-            <option value="analise"> Analise</option>
+            <option value="analise"> Análise</option>
             <option value="tutorial"> Tutorial</option>
-            <option value="noticia"> Noticia</option>
-            <option value="link"> Link til</option>
+            <option value="noticia"> Notícia</option>
+            <option value="link"> Link Útil</option>
           </select>
         </div>
         <div class="form-group">
@@ -590,7 +590,7 @@ td { padding: 12px; border-bottom: 1px solid var(--border); }
         </div>
       </div>
       <div style="display:flex;gap:10px;margin-top:8px;">
-        <button onclick="salvarEdicaoPost()" style="flex:1;padding:12px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'"> Salvar Alteraes</button>
+        <button onclick="salvarEdicaoPost()" style="flex:1;padding:12px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">Salvar Alterações</button>
         <button onclick="fecharEditarPost()" style="padding:12px 20px;background:rgba(100,116,139,0.12);color:var(--text-muted);border:1px solid var(--border);border-radius:10px;font-size:14px;cursor:pointer;">Cancelar</button>
       </div>
     </div>
@@ -690,7 +690,7 @@ function fecharPerfilAdmin() { document.getElementById('modalPerfilAdmin').style
 
 function previsualizarFotoAdmin(input) {
   var file = input.files[0]; if (!file) return;
-  if (file.size > 500*1024) { alert('Foto muito grande. Use at 500KB.'); return; }
+  if (file.size > 500*1024) { alert('Foto muito grande. Use até 500KB.'); return; }
   var reader = new FileReader();
   reader.onload = function(e) {
     window._adminFotoTemp = e.target.result;
@@ -720,7 +720,7 @@ async function salvarPerfilAdmin() {
 }
 
 async function verInfoUsuario(autorId, nomeExibido) {
-  if (!autorId) { alert('ID do Usuario no disponvel.'); return; }
+  if (!autorId) { alert('ID do usuário não disponível.'); return; }
   try {
     const { data: _res2 } = await getSB().from('users').select('nome,email,created_at,foto_url').eq('id', autorId).single();
     var data = _res2 || {};
@@ -734,7 +734,7 @@ async function verInfoUsuario(autorId, nomeExibido) {
     if (data.foto_url) avatarEl.innerHTML = '<img src="' + data.foto_url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
     else avatarEl.textContent = nome.charAt(0).toUpperCase();
     document.getElementById('modalInfoUser').style.display = 'flex';
-  } catch(e) { alert('Erro ao buscar dados do Usuario.'); }
+  } catch(e) { alert('Erro ao buscar dados do usuário.'); }
 }
 
 // ..............................................
@@ -755,7 +755,7 @@ async function carregarConfiguracoes() {
       getSB().from('config').select('data').eq('id','oauth').single(),
       getSB().from('config').select('data').eq('id','public').single()
     ]);
-    if (docOauth.error || !docOauth.data) throw new Error('Documento config/oauth no encontrado');
+    if (docOauth.error || !docOauth.data) throw new Error('Documento config/oauth não encontrado');
     const data = docOauth.data.data;
     APPS_SCRIPT_URL  = data.apps_script_url;
     YT_CLIENT_ID     = data.client_id;
@@ -766,8 +766,8 @@ async function carregarConfiguracoes() {
       SHEETS_SPREADSHEET_ID = pub.sheets_spreadsheet_id || null;
     }
   } catch (err) {
-    console.error('Erro ao carregar configuraes:', err);
-    alert('Erro ao carregar configuraes do sistema.');
+    console.error('Erro ao carregar configurações:', err);
+    alert('Erro ao carregar configurações do sistema.');
   }
 }
 
@@ -778,7 +778,7 @@ async function parseWorkerResponse(response) {
   } catch (_err) {
     return {
       success: false,
-      error: `Resposta nao-JSON do worker (HTTP ${response.status})`,
+      error: `Resposta não-JSON do worker (HTTP ${response.status})`,
       raw_detail: rawText
     };
   }
@@ -809,7 +809,7 @@ async function inicializarYouTubeAuth() {
   try {
     const { data: _ytCfg } = await getSB().from('config').select('data').eq('id','youtube').single();
     if (_ytCfg?.data?.refresh_token) await renovarAccessToken(_ytCfg.data.refresh_token);
-  } catch (err) { console.log('Token YouTube no configurado ainda.'); }
+  } catch (err) { console.log('Token YouTube não configurado ainda.'); }
   atualizarBotaoYouTube();
 }
 
@@ -827,7 +827,7 @@ async function renovarAccessToken(refreshToken) {
 
 async function autenticarYouTube() {
   if (!YT_CLIENT_ID) await carregarConfiguracoes();
-  if (!YT_CLIENT_ID) { alert('Erro ao carregar configuraes. Tente recarregar a pgina.'); return; }
+  if (!YT_CLIENT_ID) { alert('Erro ao carregar configurações. Tente recarregar a página.'); return; }
   const verifier = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2,'0')).join('');
   localStorage.setItem('yt_verifier', verifier);
   const encoder = new TextEncoder();
@@ -884,12 +884,12 @@ async function trocarCodePorToken(code) {
         });
         console.log('[YT] refresh_token salvo no Supabase');
       } else {
-        console.warn('[YT]  Sem refresh_token - access_token vlido por 1h');
+        console.warn('[YT] Sem refresh_token - access_token válido por 1h');
       }
       atualizarBotaoYouTube();
       alert('YouTube conectado com sucesso!');
     } else {
-      const errMsg = getWorkerErrorMessage(data, 'Resposta invalida');
+      const errMsg = getWorkerErrorMessage(data, 'Resposta inválida');
       console.error('[YT] Erro:', errMsg, data);
       alert('Falha ao conectar YouTube:\n' + errMsg + '\n\nAbra o Console (F12) para mais detalhes.');
     }
@@ -906,8 +906,8 @@ async function uploadYouTubeDireto(file, titulo, descricao) {
     const { data: _ytDoc } = await getSB().from('config').select('data').eq('id','youtube').single();
     if (_ytDoc?.data?.refresh_token) {
       const ok = await renovarAccessToken(_ytDoc.data.refresh_token);
-      if (!ok) throw new Error('No foi possvel renovar o token. Clique em "Reconectar YouTube".');
-    } else { throw new Error('YouTube nao conectado. Clique em "Conectar YouTube" primeiro.'); }
+      if (!ok) throw new Error('Não foi possível renovar o token. Clique em "Reconectar YouTube".');
+    } else { throw new Error('YouTube não conectado. Clique em "Conectar YouTube" primeiro.'); }
   }
   const progressBar  = document.getElementById('uploadProgressBar');
   const progressPct  = document.getElementById('uploadProgressPercent');
@@ -947,7 +947,7 @@ async function uploadYouTubeDireto(file, titulo, descricao) {
     }
     offset = chunkData.range ? parseInt(chunkData.range.split('-')[1]) + 1 : end;
   }
-  throw new Error('Upload no completou corretamente');
+  throw new Error('Upload não completou corretamente');
 }
 
 function atualizarBotaoYouTube() {
@@ -969,7 +969,7 @@ function atualizarBotaoYouTube() {
     btn.onclick = desconectarYouTube;
     btn.title = 'Clique para desconectar e reconectar';
   } else {
-    btn.textContent = ' Conectar YouTube';
+    btn.textContent = 'Conectar YouTube';
     btn.style.background = '#ff0000';
     btn.style.color = '#fff';
     btn.onclick = autenticarYouTube;
@@ -991,13 +991,13 @@ async function desconectarYouTube() {
 // SISTEMA DE PERMISS.ES ?" SUPERADMIN
 // ..............................................
 
-// Permissoes disponiveis com labels
+// Permissões disponíveis com labels
 const TODAS_permissaoES = [
-  { id: 'posts',       icon: '', label: 'Publicacoes',      desc: 'Criar e excluir posts' },
-  { id: 'comentarios', icon: '', label: 'Comentarios',      desc: 'Ver, responder e excluir Comentarios' },
+  { id: 'posts',       icon: '', label: 'Publicações',      desc: 'Criar e excluir posts' },
+  { id: 'comentarios', icon: '', label: 'Comentários',      desc: 'Ver, responder e excluir comentários' },
   { id: 'alunos',      icon: '', label: 'Aprovar Alunos',   desc: 'Aprovar, rejeitar e revogar alunos' },
   { id: 'planilha',    icon: '', label: 'Planilha & Fotos', desc: 'Registrar trades e enviar fotos' },
-  { id: 'youtube',     icon: '?',  label: 'YouTube',          desc: 'Postar Videos diretamente no YouTube via integrao OAuth' },
+  { id: 'youtube',     icon: '?',  label: 'YouTube',          desc: 'Postar vídeos diretamente no YouTube via integração OAuth' },
 ];
 
 // UID do superadmin (preenchido no login)
@@ -1147,7 +1147,18 @@ async function promoverAdmin() {
   if (!confirm('Promover ' + nomeAluno + ' a administrador com ' + perms.length + ' permissao(es)?')) return;
 
   try {
-    await getSB().from('users').update({ role:'admin', permissaoes:perms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() }).eq('id',uid);
+    const { data: updatedUser, error } = await getSB()
+      .from('users')
+      .update({ role:'admin', permissaoes:perms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
+      .eq('id', uid)
+      .select('id, role, permissaoes')
+      .single();
+
+    if (error) throw error;
+    if (!updatedUser || updatedUser.role !== 'admin') {
+      throw new Error('A atualizacao nao foi confirmada no banco de dados.');
+    }
+
     mostrarAlerta('alert-admins', '' + nomeAluno + ' agora administrador!', 'success');
     // Reset form
     select.value = '';
@@ -1195,7 +1206,18 @@ async function salvarpermissaoes() {
     .map(p => p.id);
   if (novasPerms.length === 0) { alert('Selecione ao menos uma permissao.'); return; }
   try {
-    await getSB().from('users').update({ permissaoes:novasPerms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() }).eq('id',_editingAdminId);
+    const { data: updatedUser, error } = await getSB()
+      .from('users')
+      .update({ permissaoes:novasPerms, promoted_by:window._adminUid, promoted_at:new Date().toISOString() })
+      .eq('id', _editingAdminId)
+      .select('id, role, permissaoes')
+      .single();
+
+    if (error) throw error;
+    if (!updatedUser || updatedUser.role !== 'admin') {
+      throw new Error('As permissoes nao foram confirmadas no banco de dados.');
+    }
+
     fecharModalpermissaoes();
     mostrarAlerta('alert-admins', 'Permissoes atualizadas!', 'success');
     carregarAdmins();
@@ -1206,7 +1228,18 @@ async function rebaixarAdmin() {
   if (!_editingAdminId) return;
   if (!confirm('Remover este administrador? Ele voltara a ser aluno.')) return;
   try {
-    await getSB().from('users').update({ role:'aluno', permissaoes:null, promoted_by:null, promoted_at:null }).eq('id',_editingAdminId);
+    const { data: updatedUser, error } = await getSB()
+      .from('users')
+      .update({ role:'aluno', permissaoes:null, promoted_by:null, promoted_at:null })
+      .eq('id', _editingAdminId)
+      .select('id, role')
+      .single();
+
+    if (error) throw error;
+    if (!updatedUser || updatedUser.role !== 'aluno') {
+      throw new Error('O rebaixamento nao foi confirmado no banco de dados.');
+    }
+
     fecharModalpermissaoes();
     mostrarAlerta('alert-admins', 'Admin removido, voltou a ser aluno.', 'success');
     carregarAdmins();
@@ -1904,19 +1937,19 @@ function exportarAlunos() {
   link.click();
 }
 async function aprovarUsuario(uid) {
-  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
+  if (!temPermissao('alunos')) { alert('Sem permissão.'); return; }
   try { await getSB().from('users').update({ aprovado:true }).eq('id',uid); mostrarAlerta('alert-aprovacao','Aprovado!','success'); carregarUsuarios(); }
   catch (err) { mostrarAlerta('alert-aprovacao','Erro ao aprovar','error'); }
 }
 async function rejeitarUsuario(uid) {
-  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
+  if (!temPermissao('alunos')) { alert('Sem permissão.'); return; }
   if (!confirm('Rejeitar e excluir este usuario?')) return;
   try { await getSB().from('users').delete().eq('id',uid); mostrarAlerta('alert-aprovacao','Rejeitado','success'); carregarUsuarios(); }
   catch (err) { mostrarAlerta('alert-aprovacao','Erro','error'); }
 }
 async function revogarAprovacao(uid) {
-  if (!temPermissao('alunos')) { alert('Sem permissao.'); return; }
-  if (!confirm('Revogar aprovacao?')) return;
+  if (!temPermissao('alunos')) { alert('Sem permissão.'); return; }
+  if (!confirm('Revogar aprovação?')) return;
   try { await getSB().from('users').update({ aprovado:false }).eq('id',uid); mostrarAlerta('alert-aprovacao','Revogado','success'); carregarUsuarios(); }
   catch (err) { mostrarAlerta('alert-aprovacao','Erro','error'); }
 }
@@ -1955,7 +1988,7 @@ function removerImagemTrade() {
 
 document.getElementById('formFotoTrade').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (!temPermissao('planilha')) { alert('Sem permissao para enviar fotos.'); return; }
+  if (!temPermissao('planilha')) { alert('Sem permissão para enviar fotos.'); return; }
   if (!tradeFile) { mostrarAlerta('alert-foto-trade','Selecione uma foto','error'); return; }
   const btn = document.getElementById('btnFotoTrade');
   btn.disabled = true; btn.textContent = 'Enviando...';
@@ -2062,8 +2095,8 @@ async function salvarAtivo(dia, mes, ano, semana, alvo, pontos, trades, gains, s
   return await parseWorkerResponse(response);
 }
 async function deletarPost(postId) {
-  if (!temPermissao('posts')) { alert('Sem permissao para excluir posts.'); return; }
-  if (!confirm('Excluir este post permanentemente? Esta acao nao pode ser desfeita.')) return;
+  if (!temPermissao('posts')) { alert('Sem permissão para excluir posts.'); return; }
+  if (!confirm('Excluir este post permanentemente? Esta ação não pode ser desfeita.')) return;
   try {
     // Busca o post para verificar se tem video no YouTube
     const { data: _postDoc } = await getSB().from('posts').select('youtube_video_id').eq('id',postId).single();
@@ -2114,7 +2147,7 @@ let _editPostCache = {};
 
 function abrirEditarPost(postId) {
   getSB().from('posts').select('*').eq('id',postId).single().then(({data:p,error:_e}) => {
-    if (_e || !p) { alert('Post nao encontrado.'); return; }
+    if (_e || !p) { alert('Post não encontrado.'); return; }
     _editPostCache = { id: postId, ...p };
     document.getElementById('editPostId').value = postId;
     document.getElementById('editPostTitulo').value = p.titulo || '';
@@ -2135,7 +2168,7 @@ async function salvarEdicaoPost() {
   const postId = document.getElementById('editPostId').value;
   if (!postId) return;
   const titulo = document.getElementById('editPostTitulo').value.trim();
-  if (!titulo) { mostrarAlerta('alert-edit-post', 'Titulo obrigatorio.', 'error'); return; }
+  if (!titulo) { mostrarAlerta('alert-edit-post', 'Título obrigatório.', 'error'); return; }
 
   try {
     await getSB().from('posts').update({
@@ -2176,7 +2209,7 @@ function inicializarVisualizacao() {
 
 document.getElementById('formTradeData').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (!temPermissao('planilha')) { alert('Sem permissao para registrar trades.'); return; }
+  if (!temPermissao('planilha')) { alert('Sem permissão para registrar trades.'); return; }
   const btn = document.getElementById('btnTradeData');
   btn.disabled = true; btn.textContent = 'Salvando...';
   try {

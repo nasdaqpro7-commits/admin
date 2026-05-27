@@ -1016,10 +1016,10 @@ function temPermissao(perm) {
 function aplicarpermissaoesUI() {
   // Mapa aba -> id do elemento -> permissao necessria
   const abas = [
-    { id: 'tabPosts',       secao: 'posts',       perm: () => true },
-    { id: 'tabAprovacoes',  secao: 'aprovacoes',  perm: () => true },
-    { id: 'tabPlanilha',    secao: 'planilha',    perm: () => true },
-    { id: 'tabAdmins',      secao: 'admins',      perm: () => window._isSuperAdmin     },
+    { id: 'tabPosts',       secao: 'posts',       perm: () => temPermissao('posts') },
+    { id: 'tabAprovacoes',  secao: 'aprovacoes',  perm: () => temPermissao('alunos') },
+    { id: 'tabPlanilha',    secao: 'planilha',    perm: () => temPermissao('planilha') },
+    { id: 'tabAdmins',      secao: 'admins',      perm: () => window._isSuperAdmin },
   ];
 
   abas.forEach(a => {

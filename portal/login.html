@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Login | Dashboard NASDAQ PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* ══ TEMA COMPARTILHADO ══ */
+/* â•â• TEMA COMPARTILHADO â•â• */
 :root {
   --bg: #020617; --card: #0f172a; --card-hover: #161b2e;
   --border: rgba(255,255,255,.1); --border-bright: rgba(99,102,241,0.4);
@@ -143,168 +143,18 @@ input::placeholder { color: var(--text-muted); }
 .back-link a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color .2s; }
 .back-link a:hover { color: var(--accent); }
 
-/* ── SOCIAL BAR ── */
-.social-bar {
-  max-width: 420px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.social-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all .25s;
-  border: 1px solid transparent;
-}
-.social-btn {
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  justify-content: center;
-}
-.social-btn.instagram {
-  background: rgba(193,53,132,0.12);
-  border-color: rgba(193,53,132,0.4);
-  color: #f472b6;
-}
-.social-btn.instagram:hover {
-  background: rgba(193,53,132,0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(193,53,132,0.25);
-}
-.social-btn.youtube {
-  background: rgba(255,0,0,0.1);
-  border-color: rgba(255,0,0,0.35);
-  color: #f87171;
-}
-.social-btn.youtube:hover {
-  background: rgba(255,0,0,0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255,0,0,0.2);
-}
-.social-btn.whatsapp {
-  background: rgba(37,211,102,0.1);
-  border-color: rgba(37,211,102,0.35);
-  color: #4ade80;
-}
-.social-btn.whatsapp:hover {
-  background: rgba(37,211,102,0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37,211,102,0.2);
-}
-
-/* ── MESAS INDICADAS ── */
-.mesas-section {
-  max-width: 420px;
-  width: 100%;
-}
-.mesas-toggle {
-  width: 100%;
-  background: rgba(99,102,241,0.08);
-  border: 1px solid rgba(99,102,241,0.25);
-  border-radius: 12px;
-  padding: 14px 20px;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all .25s;
-  font-family: inherit;
-}
-.mesas-toggle:hover {
-  background: rgba(99,102,241,0.15);
-  border-color: rgba(99,102,241,0.5);
-}
-.mesas-toggle .arrow {
-  transition: transform .3s;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-.mesas-toggle.open .arrow { transform: rotate(180deg); }
-
-.mesas-panel {
-  display: none;
-  margin-top: 10px;
-  background: var(--card);
-  border: 1px solid rgba(99,102,241,0.2);
-  border-radius: 12px;
-  overflow: hidden;
-  animation: slideDown .25s ease;
-}
-@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
-.mesas-panel.open { display: block; }
-
-.mesa-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: background .2s;
-}
-.mesa-item:last-child { border-bottom: none; }
-.mesa-item:hover { background: rgba(99,102,241,0.06); }
-.mesa-info { display: flex; align-items: center; gap: 12px; }
-.mesa-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-.mesa-logo.tp { background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; font-size: 13px; letter-spacing: -0.5px; }
-.mesa-logo.apex { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; font-size: 13px; }
-.mesa-text {}
-.mesa-name { font-size: 14px; font-weight: 800; color: var(--text); }
-.mesa-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.mesa-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: all .2s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.mesa-link:hover { transform: scale(1.05); box-shadow: 0 4px 14px rgba(99,102,241,0.4); }
-
-@media (max-width: 480px) {
-  .container { max-width: 100%; }
-  .mesas-section { max-width: 100%; }
-  .social-bar { max-width: 100%; }
   .card { padding: 24px; }
   h1 { font-size: 24px; }
 }
 </style>
 <script>
-/* ── NasTheme inline ── */
+/* â”€â”€ NasTheme inline â”€â”€ */
 (function(){
   const KEY='dashboard-tema';
   function aplicar(t){
     if(t==='light'){document.documentElement.classList.add('light-theme');if(document.body)document.body.classList.add('light-theme');}
     else{document.documentElement.classList.remove('light-theme');if(document.body)document.body.classList.remove('light-theme');}
-    var ic=document.getElementById('themeIcon');if(ic)ic.textContent=t==='dark'?'🌙':'☀️';
+    var ic=document.getElementById('themeIcon');if(ic)ic.textContent=t==='dark'?'\u{1F319}':'\u2600\uFE0F';
   }
   function get(){return localStorage.getItem(KEY)||'dark';}
   aplicar(get());
@@ -314,7 +164,7 @@ input::placeholder { color: var(--text-muted); }
       var n=get()==='dark'?'light':'dark';
       localStorage.setItem(KEY,n);aplicar(n);
       var ic=document.getElementById('themeIcon');
-      if(ic){ic.style.transform='rotate(360deg) scale(0)';setTimeout(function(){ic.textContent=n==='dark'?'🌙':'☀️';ic.style.transform='rotate(0deg) scale(1)';},150);}
+      if(ic){ic.style.transform='rotate(360deg) scale(0)';setTimeout(function(){ic.textContent=n==='dark'?'\u{1F319}':'\u2600\uFE0F';ic.style.transform='rotate(0deg) scale(1)';},150);}
     },
     getTema:get
   };
@@ -323,13 +173,13 @@ input::placeholder { color: var(--text-muted); }
 </script>
 </head>
 <body>
-<button onclick="NasTheme.toggle()" title="Alternar tema" style="position:fixed;top:16px;right:16px;z-index:9999;background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:all .2s;"><span id="themeIcon">🌙</span></button>
+<button onclick="NasTheme.toggle()" title="Alternar tema" style="position:fixed;top:16px;right:16px;z-index:9999;background:var(--card);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:10px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:all .2s;"><span id="themeIcon">&#127769;</span></button>
 
 <div class="container">
   <div class="header">
-    <div class="logo">🔐</div>
+    <div class="logo">&#128274;</div>
     <h1>Entrar</h1>
-    <p class="subtitle">Acesse sua área exclusiva</p>
+    <p class="subtitle">Acesse sua &aacute;rea exclusiva</p>
   </div>
 
   <div class="card">
@@ -343,7 +193,7 @@ input::placeholder { color: var(--text-muted); }
 
       <div class="form-group">
         <label for="senha">Senha</label>
-        <input type="password" id="senha" placeholder="••••••••" required>
+        <input type="password" id="senha" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
       </div>
 
       <div class="form-group" style="display:flex;align-items:center;gap:8px;">
@@ -369,79 +219,27 @@ input::placeholder { color: var(--text-muted); }
     </div>
 
     <div class="back-link">
-      <a href="../">← Voltar ao Dashboard</a>
+      <a href="../">&larr; Voltar ao Dashboard</a>
     </div>
   </div>
 </div>
 
-<!-- REDES SOCIAIS -->
-<div class="social-bar">
-  <a href="https://www.instagram.com/joaodibtrader?igsh=dzgxMmJsOWtjaWJh" target="_blank" rel="noopener" class="social-btn instagram" title="Instagram">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-  </a>
-  <a href="https://m.youtube.com/@joaodibtrader/" target="_blank" rel="noopener" class="social-btn youtube" title="YouTube">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-  </a>
-  <a href="https://chat.whatsapp.com/SEU_LINK_AQUI" target="_blank" rel="noopener" class="social-btn whatsapp" title="Grupo Gratuito WhatsApp">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-</div>
-
-<!-- MESAS INDICADAS -->
-<div class="mesas-section">
-  <button class="mesas-toggle" id="mesasToggle" onclick="toggleMesas()">
-    <span>🏆 Mesas Indicadas — Prop Firms</span>
-    <span class="arrow">▼</span>
-  </button>
-  <div class="mesas-panel" id="mesasPanel">
-    <div class="mesa-item">
-      <div class="mesa-info">
-        <div class="mesa-logo tp">TP</div>
-        <div class="mesa-text">
-          <div class="mesa-name">TakeProfit Trader</div>
-          <div class="mesa-desc">Cupom: DIB</div>
-        </div>
-      </div>
-      <a href="https://takeprofittrader.com/?referralCode=DIB" target="_blank" rel="noopener" class="mesa-link">
-        Acessar →
-      </a>
-    </div>
-    <div class="mesa-item">
-      <div class="mesa-info">
-        <div class="mesa-logo apex">AX</div>
-        <div class="mesa-text">
-          <div class="mesa-name">Apex Trader Funding</div>
-          <div class="mesa-desc">Cupom: DIB</div>
-        </div>
-      </div>
-      <a href="https://apextraderfunding.com/member/aff/go/joaodib?c=ZINFQCUB" target="_blank" rel="noopener" class="mesa-link">
-        Acessar →
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 
 <script>
-function toggleMesas() {
-  const btn = document.getElementById('mesasToggle');
-  const panel = document.getElementById('mesasPanel');
-  btn.classList.toggle('open');
-  panel.classList.toggle('open');
-}
 
 // Aguarda Supabase estar pronto
 document.addEventListener('supabase-ready', inicializar);
-// fallback se já carregou
+// fallback se jÃ¡ carregou
 if (window._supabase) inicializar();
 
 function inicializar() {
   const sb = window._supabase;
 
-  // ── Verifica sessão ativa ──
+  // â”€â”€ Verifica sessÃ£o ativa â”€â”€
   document.body.style.opacity = '0.5';
   document.body.style.pointerEvents = 'none';
 
@@ -464,7 +262,7 @@ function inicializar() {
           if (userData.aprovado === true) { window.location.href = 'aluno.html'; return; }
         }
         await sb.auth.signOut();
-      } catch (err) { console.error('Erro ao verificar usuário:', err); }
+      } catch (err) { console.error('Erro ao verificar usu\u00e1rio:', err); }
     }
     document.body.style.opacity = '1';
     document.body.style.pointerEvents = 'auto';
@@ -518,21 +316,21 @@ function inicializar() {
 
       mostrarAlerta(
         origem === 'google'
-          ? '⏳ Login com Google concluído. Sua conta ainda está aguardando aprovação do administrador.'
-          : '⏳ Sua conta ainda está aguardando aprovação do administrador.',
+          ? '\u23F3 Login com Google conclu\u00eddo. Sua conta ainda est\u00e1 aguardando aprova\u00e7\u00e3o do administrador.'
+          : '\u23F3 Sua conta ainda est\u00e1 aguardando aprova\u00e7\u00e3o do administrador.',
         'warning'
       );
       await sb.auth.signOut();
       return true;
     } catch (err) {
-      console.error('Erro ao verificar usuário:', err);
-      mostrarAlerta('❌ Não foi possível validar sua conta agora. Tente novamente.', 'error');
+      console.error('Erro ao verificar usu\u00e1rio:', err);
+      mostrarAlerta('\u274C N\u00e3o foi poss\u00edvel validar sua conta agora. Tente novamente.', 'error');
       try { await sb.auth.signOut(); } catch (_) {}
       return true;
     }
   }
 
-  // ── Login com email + senha ──
+  // â”€â”€ Login com email + senha â”€â”€
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
@@ -549,11 +347,11 @@ function inicializar() {
       return;
 
       const user = data.user;
-      // Garante row em users (cria se não existir via upsert)
+      // Garante row em users (cria se nÃ£o existir via upsert)
       const { data: userData } = await sb.from('users').select('role, aprovado').eq('id', user.id).single();
 
       if (!userData) {
-        // Primeiro acesso — trigger já cria a row, mas garante aprovado=false
+        // Primeiro acesso â€” trigger jÃ¡ cria a row, mas garante aprovado=false
         await sb.from('users').upsert({
           id: user.id,
           nome: user.user_metadata?.full_name || email.split('@')[0],
@@ -562,21 +360,21 @@ function inicializar() {
           aprovado: false,
           created_at: new Date().toISOString()
         });
-        mostrarAlerta('⏳ Conta criada. Aguarde aprovação do administrador.', 'warning');
+        mostrarAlerta('\u23F3 Conta criada. Aguarde aprova\u00e7\u00e3o do administrador.', 'warning');
         await sb.auth.signOut();
         btnLogin.disabled = false; btnLogin.textContent = 'Entrar'; return;
       }
 
       if (userData.role === 'admin') { window.location.href = 'admin.html'; return; }
       if (userData.aprovado !== true) {
-        mostrarAlerta('⏳ Sua conta ainda está aguardando aprovação do administrador.', 'warning');
+        mostrarAlerta('\u23F3 Sua conta ainda est\u00e1 aguardando aprova\u00e7\u00e3o do administrador.', 'warning');
         await sb.auth.signOut();
         btnLogin.disabled = false; btnLogin.textContent = 'Entrar'; return;
       }
       window.location.href = 'aluno.html';
 
     } catch (error) {
-      let mensagem = '❌ ';
+      let mensagem = '\u274C ';
       const msg = error.message || '';
       if (msg.includes('Invalid login credentials') || msg.includes('invalid_credentials')) {
         mensagem += 'E-mail ou senha incorretos.';
@@ -592,32 +390,32 @@ function inicializar() {
     }
   });
 
-  // ── Login com Google ──
+  // â”€â”€ Login com Google â”€â”€
   const btnGoogle = document.getElementById('btnGoogle');
   if (btnGoogle) {
     btnGoogle.addEventListener('click', async () => {
-      mostrarAlerta('🔄 Redirecionando para o Google...', 'warning');
+      mostrarAlerta('\u{1F504} Redirecionando para o Google...', 'warning');
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
         options: { redirectTo: window.location.origin + window.location.pathname }
       });
-      if (error) mostrarAlerta('❌ Erro ao entrar com Google: ' + error.message, 'error');
+      if (error) mostrarAlerta('\u274C Erro ao entrar com Google: ' + error.message, 'error');
     });
   }
 
-  // ── Esqueceu senha ──
+  // â”€â”€ Esqueceu senha â”€â”€
   document.getElementById('esqueceuSenha').addEventListener('click', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
-    if (!email) { mostrarAlerta('❌ Digite seu e-mail primeiro', 'error'); return; }
+    if (!email) { mostrarAlerta('\u274C Digite seu e-mail primeiro', 'error'); return; }
     try {
       const { error } = await sb.auth.resetPasswordForEmail(email, {
         redirectTo: window.location.origin + '/portal/reset-password.html'
       });
       if (error) throw error;
-      mostrarAlerta('✅ E-mail de recuperação enviado! Verifique sua caixa de entrada.', 'warning');
+      mostrarAlerta('\u2705 E-mail de recupera\u00e7\u00e3o enviado! Verifique sua caixa de entrada.', 'warning');
     } catch (error) {
-      mostrarAlerta('❌ Erro ao enviar e-mail de recuperação: ' + error.message, 'error');
+      mostrarAlerta('\u274C Erro ao enviar e-mail de recupera\u00e7\u00e3o: ' + error.message, 'error');
     }
   });
 }

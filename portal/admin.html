@@ -771,6 +771,23 @@ async function carregarConfiguracoes() {
   }
 }
 
+async function parseWorkerResponse(response) {
+  const rawText = await response.text();
+  try {
+    return rawText ? JSON.parse(rawText) : {};
+  } catch (_err) {
+    return {
+      success: false,
+      error: `Resposta nao-JSON do worker (HTTP ${response.status})`,
+      raw_detail: rawText
+    };
+  }
+}
+
+function getWorkerErrorMessage(data, fallback) {
+  return data?.error || data?.detail || data?.google_detail || data?.raw_detail || fallback;
+}
+
 function abrirPlanilhaDinamica(e) {
   e.preventDefault();
   // ID correto da planilha NasdaqPro (hardcoded como fonte de verdade)
@@ -802,7 +819,7 @@ async function renovarAccessToken(refreshToken) {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ client_id: YT_CLIENT_ID, client_secret: YT_CLIENT_SECRET, refresh_token: refreshToken })
     });
-    const data = await resp.json();
+    const data = await parseWorkerResponse(resp);
     if (data.success && data.access_token) { ytAccessToken = data.access_token; return true; }
   } catch (err) { console.error('Erro ao renovar token:', err); }
   return false;
@@ -851,7 +868,7 @@ async function trocarCodePorToken(code) {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    const data = await resp.json();
+    const data = await parseWorkerResponse(resp);
 
     console.log('[YT] Resposta do worker:', JSON.stringify(data));
     if (data.success && data.access_token) {
@@ -872,7 +889,7 @@ async function trocarCodePorToken(code) {
       atualizarBotaoYouTube();
       alert('YouTube conectado com sucesso!');
     } else {
-      const errMsg = data.error || data.google_detail || 'Resposta invalida';
+      const errMsg = getWorkerErrorMessage(data, 'Resposta invalida');
       console.error('[YT] Erro:', errMsg, data);
       alert('Falha ao conectar YouTube:\n' + errMsg + '\n\nAbra o Console (F12) para mais detalhes.');
     }
@@ -904,8 +921,8 @@ async function uploadYouTubeDireto(file, titulo, descricao) {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ accessToken: ytAccessToken, metadata, fileSize: file.size, fileType: file.type || 'video/mp4' })
   });
-  const initData = await initResp.json();
-  if (!initData.success) throw new Error(initData.error || 'Erro ao iniciar upload');
+  const initData = await parseWorkerResponse(initResp);
+  if (!initData.success) throw new Error(getWorkerErrorMessage(initData, 'Erro ao iniciar upload'));
   const uploadUrl = initData.uploadUrl;
   const CHUNK = 5 * 1024 * 1024;
   let offset = 0;
@@ -921,8 +938,8 @@ async function uploadYouTubeDireto(file, titulo, descricao) {
       headers: { 'Content-Type': file.type || 'video/mp4', 'X-Upload-Url': uploadUrl, 'X-Content-Range': `bytes ${offset}-${end-1}/${file.size}`, 'X-Content-Type': file.type || 'video/mp4' },
       body: chunk
     });
-    const chunkData = await chunkResp.json();
-    if (!chunkData.success) throw new Error(chunkData.error || 'Erro no envio do chunk');
+    const chunkData = await parseWorkerResponse(chunkResp);
+    if (!chunkData.success) throw new Error(getWorkerErrorMessage(chunkData, 'Erro no envio do chunk'));
     if (chunkData.done) {
       progressBar.style.width = '100%'; progressPct.textContent = '100%';
       progressText.textContent = 'Video publicado no YouTube!';
@@ -1396,9 +1413,9 @@ document.getElementById('formPost').addEventListener('submit', async (e) => {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ appsScriptUrl: APPS_SCRIPT_URL, params: Object.fromEntries(params) })
           });
-          const resultado = await response.json();
+          const resultado = await parseWorkerResponse(response);
           clearInterval(progressInterval);
-          if (!resultado.success) throw new Error(resultado.error || 'Erro no upload');
+          if (!resultado.success) throw new Error(getWorkerErrorMessage(resultado, 'Erro no upload'));
           driveFileId = resultado.id;
           finalMidiaURL = tipoArquivo === 'imagem' ? `https://drive.google.com/uc?export=view&id=${resultado.id}` : `https://drive.google.com/uc?export=download&id=${resultado.id}`;
           midiaTipo = tipoArquivo;
@@ -1962,12 +1979,12 @@ document.getElementById('formFotoTrade').addEventListener('submit', async (e) =>
         }
       })
     });
-    const resultado = await response.json();
+    const resultado = await parseWorkerResponse(response);
     if (resultado.success) {
       mostrarAlerta('alert-foto-trade', `Foto salva! (Linha ${resultado.linha})`, 'success');
       document.getElementById('formFotoTrade').reset();
       removerImagemTrade();
-    } else { throw new Error(resultado.error || 'Erro desconhecido'); }
+    } else { throw new Error(getWorkerErrorMessage(resultado, 'Erro desconhecido')); }
   } catch (error) {
     mostrarAlerta('alert-foto-trade', 'Erro: ' + error.message, 'error');
     document.getElementById('uploadPreviewTrade').style.display = 'block';
@@ -2042,7 +2059,7 @@ async function salvarAtivo(dia, mes, ano, semana, alvo, pontos, trades, gains, s
       }
     })
   });
-  return await response.json();
+  return await parseWorkerResponse(response);
 }
 async function deletarPost(postId) {
   if (!temPermissao('posts')) { alert('Sem permissao para excluir posts.'); return; }
@@ -2073,11 +2090,11 @@ async function deletarPost(postId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ accessToken: ytAccessToken, videoId })
           });
-          const data = await resp.json();
+          const data = await parseWorkerResponse(resp);
           if (data.success) {
             console.log('[YT] Video deletado:', videoId);
           } else {
-            console.warn('[YT] Falha ao deletar video:', data.error, data.detail || '');
+            console.warn('[YT] Falha ao deletar video:', getWorkerErrorMessage(data, 'Falha ao deletar video'));
             // Informa o admin mas nao bloqueia
             if (data.hint) console.warn('[YT] Dica:', data.hint);
           }

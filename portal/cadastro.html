@@ -431,13 +431,19 @@ function inicializarCadastro() {
 
       if (!user?.id) throw new Error('Não foi possível criar o usuário.');
 
+      const { data: existingUser } = await sb
+        .from('users')
+        .select('role, aprovado, created_at')
+        .eq('id', user.id)
+        .maybeSingle();
+
       const { error: upsertError } = await sb.from('users').upsert({
         id: user.id,
         nome,
         email,
-        role: 'aluno',
-        aprovado: false,
-        created_at: new Date().toISOString()
+        role: existingUser?.role ?? 'aluno',
+        aprovado: existingUser?.aprovado ?? false,
+        created_at: existingUser?.created_at || new Date().toISOString()
       });
 
       // Quando existe trigger em auth.users -> public.users, a linha já nasce no banco.
